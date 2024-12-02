@@ -6,6 +6,7 @@ public class Attraction {
     private String name;
     private String description;
     private String hoursOfOperation;
+    private boolean isOpen;
     private String address;
     private String image;
     private String socialMedia;
@@ -44,6 +45,14 @@ public class Attraction {
         this.hoursOfOperation = hoursOfOperation;
     }
 
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -76,11 +85,16 @@ public class Attraction {
         this.typeId = typeId;
     }
 
-    public Attraction(int id, String name, String description, String hoursOfOperation, String address, String image, String socialMedia, int typeId) {
+    public Attraction() {}
+
+
+
+    public Attraction(int id, String name, String description, String hoursOfOperation, boolean isOpen, String address, String image, String socialMedia, int typeId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hoursOfOperation = hoursOfOperation;
+        this.isOpen = isOpen;
         this.address = address;
         this.image = image;
         this.socialMedia = socialMedia;
