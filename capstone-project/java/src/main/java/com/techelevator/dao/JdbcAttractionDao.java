@@ -2,13 +2,11 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Attraction;
-import com.techelevator.model.RegisterAttractionDto;
-import com.techelevator.model.Attraction;
+import com.techelevator.model.Badge;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class JdbcAttractionDao {
+public class JdbcAttractionDao implements AttractionDao{
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -125,6 +123,40 @@ public class JdbcAttractionDao {
         return attraction;
     }
 
+    public Attraction updateAttraction(Attraction attraction) {
+        Attraction updatedAttraction = null;
+        String sql = "UPDATE attraction SET name=?, description=?, hours_of_operation=?, open_now=?, address=?, images=?, social_media=?, type_id=?\n" +
+                "\tWHERE id=?";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, attraction.getName(), attraction.getDescription(), attraction.getId(), attraction.getHoursOfOperation(),attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId());
+
+            if (rowsAffected == 0) {
+                throw new DaoException("Zero rows affected, expected at least one");
+            } else {
+                updatedAttraction = getAttractionById(attraction.getId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return updatedAttraction;
+    }
+
+    public int deleteAttractionById(int id){
+        int numberOfRows = 0;
+        String badgeDeleteSql = "DELETE FROM badge WHERE id = ?";
+        try {
+            numberOfRows = jdbcTemplate.update(badgeDeleteSql, id);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return numberOfRows;
+
+    }
     
     @Override
     public Attraction createAttraction(Attraction attraction) {
@@ -151,7 +183,7 @@ public class JdbcAttractionDao {
         attraction.setName(rs.getString("name"));
         attraction.setDescription(rs.getString("description"));
         attraction.setHoursOfOperation(rs.getString("hours_of_operation"));
-        attraction.setOpen(rs.getBoolean("open_now")); //TODO ADD ROW TO SQL
+        attraction.setOpen(rs.getBoolean("open_now"));
         attraction.setAddress(rs.getString("address"));
         attraction.setImage(rs.getString("images"));
         attraction.setSocialMedia(rs.getString("social_media"));
