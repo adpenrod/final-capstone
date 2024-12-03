@@ -3,9 +3,11 @@
       <h1>Map Data</h1>
       <p>Log in to view/update your history</p>
     </div>
-  </template>
+
+
+</template>
   
-  <script>
+<script>
   export default {
   };
-  </script>
+</script>
