@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import com.techelevator.Service.AttractionService;
 import com.techelevator.dao.AttractionDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Attraction;
@@ -16,8 +17,12 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping(path = "/attractions/")
 public class AttractionController {
+    private AttractionService as;
 
     private AttractionDao attractionDao;
+    public AttractionController(AttractionService as){
+        this.as = as;
+    }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Attraction> listAttractions(@RequestParam(defaultValue = "") String userInput) {

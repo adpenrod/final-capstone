@@ -59,6 +59,7 @@ public class JdbcAttractionDao implements AttractionDao{
 
     @Override
     public Attraction getAttractionByName(String name) {
+        //TODO Change to ILIKE queries
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Attraction attraction = null;
         String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
