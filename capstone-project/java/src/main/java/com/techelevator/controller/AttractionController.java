@@ -74,54 +74,17 @@ public class AttractionController {
     }
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(path = "/attractions/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id, Principal principal) {
         auditLog("delete", id, principal.getName());
         attractionDao.deleteAttractionById(id);
     }
-
-
-
-
-
-
 
     private void auditLog(String operation, int attraction, String username) {
         System.out.println(
                 "User: " + username + " performed the operation: " + operation +
                         " on attraction: " + attraction);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

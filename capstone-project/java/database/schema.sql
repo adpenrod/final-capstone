@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS public.attraction
     name "char" NOT NULL,
     description "char" NOT NULL,
     hours_of_operation character varying NOT NULL,
-    open_now boolean NOT NULL,
     address character varying NOT NULL,
     images character varying NOT NULL,
     social_media "char",

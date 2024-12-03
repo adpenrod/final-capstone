@@ -26,7 +26,7 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public Attraction getAttractionById(int id) {
         Attraction attraction = null;
-        String sql = "SELECT id, name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
+        String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
                 " FROM attraction WHERE id = ?";
               
         try {
@@ -43,7 +43,7 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public List<Attraction> getAttractions() {
         List<Attraction> attractions = new ArrayList<>();
-        String sql = "SELECT id, name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
+        String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
                 " FROM attraction ORDER BY name ASC";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -61,7 +61,7 @@ public class JdbcAttractionDao implements AttractionDao{
     public Attraction getAttractionByName(String name) {
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Attraction attraction = null;
-        String sql = "SELECT id, name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
+        String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
                 " FROM attraction WHERE name = ?";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, name);
@@ -77,7 +77,7 @@ public class JdbcAttractionDao implements AttractionDao{
     public Attraction getAttractionByAddress(String address) {
         if (address == null) throw new IllegalArgumentException("address cannot be null");
         Attraction attraction = null;
-        String sql = "SELECT id, name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
+        String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
                 " FROM attraction WHERE address = ?";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, address);
@@ -92,7 +92,7 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public List<Attraction> getAttractionByType(String typeName){
         List<Attraction> attractions = new ArrayList<>();
-        String sql = "SELECT id, a.name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
+        String sql = "SELECT id, a.name, description, hours_of_operation, address, images, social_media, type_id " +
                 " FROM attraction a INNER JOIN type t ON t.id = a.type_id WHERE t.name = ?";
 
         try {
@@ -109,10 +109,10 @@ public class JdbcAttractionDao implements AttractionDao{
 
     public Attraction updateAttraction(Attraction attraction) {
         Attraction updatedAttraction = null;
-        String sql = "UPDATE attraction SET name=?, description=?, hours_of_operation=?, open_now=?, address=?, images=?, social_media=?, type_id=?\n" +
+        String sql = "UPDATE attraction SET name=?, description=?, hours_of_operation=?, address=?, images=?, social_media=?, type_id=?\n" +
                 "\tWHERE id=?";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, attraction.getName(), attraction.getDescription(), attraction.getHoursOfOperation(), attraction.isOpen(), attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId(),attraction.getId());
+            int rowsAffected = jdbcTemplate.update(sql, attraction.getName(), attraction.getDescription(), attraction.getHoursOfOperation(), attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId(),attraction.getId());
 
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
@@ -146,13 +146,13 @@ public class JdbcAttractionDao implements AttractionDao{
     public Attraction createAttraction(Attraction attraction) {
         Attraction newAttraction = null;
         String insertAttractionSql = "INSERT INTO attraction ( " +
-                " name, description, hours_of_operation, open_now, address, images, social_media, type_id) " +
-                " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?);" +
+                " name, description, hours_of_operation, address, images, social_media, type_id) " +
+                " VALUES ( ?, ?, ?, ?, ?, ?, ?);" +
                 " RETURNING id";
 
         try {
             int newAttractionId = jdbcTemplate.queryForObject(insertAttractionSql, int.class, attraction.getName(), attraction.getDescription(),
-                    attraction.getHoursOfOperation(), attraction.isOpen(), attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId());
+                    attraction.getHoursOfOperation(), attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId());
             newAttraction = getAttractionById(newAttractionId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -168,7 +168,6 @@ public class JdbcAttractionDao implements AttractionDao{
         attraction.setName(rs.getString("name"));
         attraction.setDescription(rs.getString("description"));
         attraction.setHoursOfOperation(rs.getString("hours_of_operation"));
-        attraction.setOpen(rs.getBoolean("open_now"));
         attraction.setAddress(rs.getString("address"));
         attraction.setImage(rs.getString("images"));
         attraction.setSocialMedia(rs.getString("social_media"));
