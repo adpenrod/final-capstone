@@ -90,37 +90,21 @@ public class JdbcAttractionDao implements AttractionDao{
         return attraction;
     }
     @Override
-    public Attraction getAttractionByType(String typeName){
-        Attraction attraction = null;
+    public List<Attraction> getAttractionByType(String typeName){
+        List<Attraction> attractions = new ArrayList<>();
         String sql = "SELECT id, a.name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
                 " FROM attraction a INNER JOIN type t ON t.id = a.type_id WHERE t.name = ?";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, typeName);
             if (results.next()) {
-                attraction = mapRowToAttraction(results);
+                Attraction attraction = mapRowToAttraction(results);
+                attractions.add(attraction);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-        return attraction;
-    }
-
-    @Override
-    public Attraction getAttractionByIsOpen(boolean isOpen){
-        Attraction attraction = null;
-        String sql = "SELECT id, name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
-                " FROM attraction WHERE is_open = true ";
-
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, isOpen);
-            if (results.next()) {
-                attraction = mapRowToAttraction(results);
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        }
-        return attraction;
+        return attractions;
     }
 
     public Attraction updateAttraction(Attraction attraction) {
