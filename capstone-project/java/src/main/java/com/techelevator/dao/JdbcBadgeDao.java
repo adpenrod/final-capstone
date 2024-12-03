@@ -75,8 +75,8 @@ public class JdbcBadgeDao implements BadgeDao {
                 " RETURNING id";
 
         try {
-            int newAttractionId = jdbcTemplate.queryForObject(insertBadgeSql, int.class, badge.getName(), badge.getDescription());
-            newBadge = getBadgeById(newAttractionId);
+            int newBadgeId = jdbcTemplate.queryForObject(insertBadgeSql, int.class, badge.getName(), badge.getDescription());
+            newBadge = getBadgeById(newBadgeId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -87,9 +87,9 @@ public class JdbcBadgeDao implements BadgeDao {
 
     public int deleteBadgeById(int id){
         int numberOfRows = 0;
-        String attractionDeleteSql = "DELETE FROM attraction WHERE id = ?";
+        String badgeDeleteSql = "DELETE FROM badge WHERE id = ?";
         try {
-            numberOfRows = jdbcTemplate.update(attractionDeleteSql, id);
+            numberOfRows = jdbcTemplate.update(badgeDeleteSql, id);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {

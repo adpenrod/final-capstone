@@ -90,13 +90,13 @@ public class JdbcAttractionDao implements AttractionDao{
         return attraction;
     }
     @Override
-    public Attraction getAttractionByType(int typeId){
+    public Attraction getAttractionByType(String typeName){
         Attraction attraction = null;
-        String sql = "SELECT id, name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
-                " FROM attraction WHERE type_id = ?";
+        String sql = "SELECT id, a.name, description, hours_of_operation, open_now, address, images, social_media, type_id " +
+                " FROM attraction a INNER JOIN type t ON t.id = a.type_id WHERE t.name = ?";
 
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, typeId);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, typeName);
             if (results.next()) {
                 attraction = mapRowToAttraction(results);
             }
@@ -128,7 +128,7 @@ public class JdbcAttractionDao implements AttractionDao{
         String sql = "UPDATE attraction SET name=?, description=?, hours_of_operation=?, open_now=?, address=?, images=?, social_media=?, type_id=?\n" +
                 "\tWHERE id=?";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, attraction.getName(), attraction.getDescription(), attraction.getId(), attraction.getHoursOfOperation(),attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId());
+            int rowsAffected = jdbcTemplate.update(sql, attraction.getName(), attraction.getDescription(), attraction.getHoursOfOperation(), attraction.isOpen(), attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId(),attraction.getId());
 
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
@@ -146,7 +146,7 @@ public class JdbcAttractionDao implements AttractionDao{
 
     public int deleteAttractionById(int id){
         int numberOfRows = 0;
-        String badgeDeleteSql = "DELETE FROM badge WHERE id = ?";
+        String badgeDeleteSql = "DELETE FROM attraction WHERE id = ?";
         try {
             numberOfRows = jdbcTemplate.update(badgeDeleteSql, id);
         } catch (CannotGetJdbcConnectionException e) {
@@ -167,7 +167,8 @@ public class JdbcAttractionDao implements AttractionDao{
                 " RETURNING id";
 
         try {
-            int newAttractionId = jdbcTemplate.queryForObject(insertAttractionSql, int.class, attraction.getName(), attraction.getDescription(), attraction.getHoursOfOperation(),attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId());
+            int newAttractionId = jdbcTemplate.queryForObject(insertAttractionSql, int.class, attraction.getName(), attraction.getDescription(),
+                    attraction.getHoursOfOperation(), attraction.isOpen(), attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId());
             newAttraction = getAttractionById(newAttractionId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
