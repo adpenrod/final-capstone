@@ -6,6 +6,12 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import BadgeView from '../views/BadgeView.vue';
+import CheckInView from '../views/CheckInView.vue';
+import MapDataView from '../views/MapDataView.vue';
+import MapDirectionsView from '../views/MapDirectionsView.vue';
+import MapHomeView from '../views/MapHomeView.vue';
+import MyHistoryView from '../views/MyHistoryView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -21,7 +27,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -46,6 +52,54 @@ const routes = [
     component: RegisterView,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: "/checkin",
+    name: "checkin",
+    component: CheckInView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/badges",
+    name: "badge",
+    component: BadgeView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/maphome",
+    name: "maphome",
+    component: MapHomeView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/mapdata",
+    name: "mapdata",
+    component: MapDataView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/mapdirections",
+    name: "mapdirections",
+    component: MapDirectionsView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/myhistory",
+    name: "myhistory",
+    component: MyHistoryView,
+    meta: {
+      requiresAuth: true
     }
   }
 ];
