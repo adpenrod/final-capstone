@@ -63,7 +63,7 @@ public class JdbcAttractionDao implements AttractionDao{
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Attraction attraction = null;
         String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
-                " FROM attraction WHERE name = ?";
+                " FROM attraction WHERE name ILIKE '%?%' ";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, name);
             if (rowSet.next()) {
@@ -79,7 +79,7 @@ public class JdbcAttractionDao implements AttractionDao{
         if (address == null) throw new IllegalArgumentException("address cannot be null");
         Attraction attraction = null;
         String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
-                " FROM attraction WHERE address = ?";
+                " FROM attraction WHERE address ILIKE %?%";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, address);
             if (rowSet.next()) {
@@ -94,7 +94,7 @@ public class JdbcAttractionDao implements AttractionDao{
     public List<Attraction> getAttractionByType(String typeName){
         List<Attraction> attractions = new ArrayList<>();
         String sql = "SELECT id, a.name, description, hours_of_operation, address, images, social_media, type_id " +
-                " FROM attraction a INNER JOIN type t ON t.id = a.type_id WHERE t.name = ?";
+                " FROM attraction a INNER JOIN type t ON t.id = a.type_id WHERE t.name ILIKE ?";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, typeName);
