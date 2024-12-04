@@ -5,13 +5,15 @@ DROP TABLE IF EXISTS attraction;
 CREATE TABLE IF NOT EXISTS public.attraction
 (
     id SERIAL,
-    name "char" NOT NULL,
-    description "char" NOT NULL,
-    hours_of_operation character varying NOT NULL,
-    address character varying NOT NULL,
-    images character varying NOT NULL,
-    social_media "char",
-    type_id integer NOT NULL,
+    name character varying,
+    description character varying,
+    hours_of_operation character varying,
+    address character varying,
+    images character varying,
+    social_media character varying,
+    type_id integer,
+    latitude numeric,
+    longitude numeric,
     PRIMARY KEY (id)
 );
 
@@ -20,8 +22,8 @@ DROP TABLE IF EXISTS badge;
 CREATE TABLE IF NOT EXISTS public.badge
 (
     id SERIAL,
-    name "char" NOT NULL,
-    description "char" NOT NULL,
+    name character varying NOT NULL,
+    description character varying NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -30,7 +32,7 @@ DROP TABLE IF EXISTS type;
 CREATE TABLE IF NOT EXISTS public.type
 (
     id SERIAL,
-    name "char" NOT NULL,
+    name character varying NOT NULL,
     PRIMARY KEY (id)
 );
 
