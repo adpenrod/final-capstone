@@ -1,4 +1,4 @@
-<template>
+<!--template>
     <div id="main">
 
         <gmp-map :center="`${latitude}, ${longitude}`" zoom="10" map-id="DEMO_MAP_ID" style="height: 400px"></gmp-map>
@@ -40,4 +40,12 @@ export default {
 
 </script>
 
-<style scoped></style>
+<style scoped></style -->
+
+<script>
+
+export default {
+
+}
+
+</script>

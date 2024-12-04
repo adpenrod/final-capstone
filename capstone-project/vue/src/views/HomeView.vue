@@ -14,12 +14,12 @@
 
 <script>
 
-import AttractionMap from '../components/AttractionMap.vue';
+import MapDisplay from '../components/MapDisplay.vue';
 
 export default {
 
   components: {
-    AttractionMap
+    MapDisplay
   }
   
 }
