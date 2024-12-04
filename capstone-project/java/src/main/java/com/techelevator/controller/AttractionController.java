@@ -20,15 +20,17 @@ public class AttractionController {
     private AttractionService as;
 
     private AttractionDao attractionDao;
-    public AttractionController(AttractionService as){
+
+    public AttractionController(AttractionService as, AttractionDao attractionDao) {
+        this.attractionDao = attractionDao;
         this.as = as;
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Attraction> listAttractions(@RequestParam(defaultValue = "") String userInput) {
-        if(userInput == "bar" || userInput == "bars"){
+        if (userInput == "bar" || userInput == "bars") {
             return attractionDao.getAttractionByType(userInput);
-        }else if(userInput == "restaurant" || userInput == "restaurants"){
+        } else if (userInput == "restaurant" || userInput == "restaurants") {
             return attractionDao.getAttractionByType(userInput);
         }
         return attractionDao.getAttractions();
@@ -46,8 +48,8 @@ public class AttractionController {
     }
 
 
-    @RequestMapping(path = "{name}", method = RequestMethod.GET)
-    public Attraction getAttractionByNameAndAddress(@PathVariable String userInput) {
+    /*@RequestMapping(path = "={userInput}", method = RequestMethod.GET)
+    public List<Attraction> getAttractionByNameAndAddress(@PathVariable String userInput) {
 
         if((attractionDao.getAttractionByName(userInput) == null)
                 && (attractionDao.getAttractionByAddress(userInput) == null)){
@@ -58,9 +60,29 @@ public class AttractionController {
         }else {
             return attractionDao.getAttractionByName(userInput);
         }
+    }*/
+
+    @RequestMapping(path = "name/{userInput}", method = RequestMethod.GET)
+    public List<Attraction> getAttractionByName(@PathVariable String userInput) {
+
+        if ((attractionDao.getAttractionByName(userInput) == null)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction not found.");
+        } else {
+            return attractionDao.getAttractionByName(userInput);
+        }
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "address/{userInput}", method = RequestMethod.GET)
+    public List<Attraction> getAttractionByAddress(@PathVariable String userInput) {
+
+        if ((attractionDao.getAttractionByAddress(userInput) == null)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction not found.");
+        } else {
+            return attractionDao.getAttractionByAddress(userInput);
+        }
+    }
+
+    @RequestMapping(path = "{id}", method = RequestMethod.PUT)
     public Attraction update(@Valid @RequestBody Attraction attraction, @PathVariable int id) {
         attraction.setId(id);
         try {

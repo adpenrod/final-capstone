@@ -58,43 +58,47 @@ public class JdbcAttractionDao implements AttractionDao{
     }
 
     @Override
-    public Attraction getAttractionByName(String name) {
-        //TODO Change to ILIKE queries
+    public List<Attraction> getAttractionByName(String name) {
+
         if (name == null) throw new IllegalArgumentException("name cannot be null");
-        Attraction attraction = null;
+        List<Attraction> attractions = new ArrayList<>();
         String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
-                " FROM attraction WHERE name ILIKE '%?%' ";
+                " FROM attraction WHERE name ILIKE ?";
         try {
-            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, name);
-            if (rowSet.next()) {
-                attraction = mapRowToAttraction(rowSet);
+            String wildcardName = "%" + name + "%";
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, wildcardName);
+            while (rowSet.next()) {
+                Attraction attraction = mapRowToAttraction(rowSet);
+                attractions.add(attraction);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-        return attraction;
+        return attractions;
     }
     @Override
-    public Attraction getAttractionByAddress(String address) {
+    public List<Attraction> getAttractionByAddress(String address) {
         if (address == null) throw new IllegalArgumentException("address cannot be null");
-        Attraction attraction = null;
+        List<Attraction> attractions = new ArrayList<>();
         String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id " +
-                " FROM attraction WHERE address ILIKE %?%";
+                " FROM attraction WHERE address ILIKE ?";
         try {
-            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, address);
-            if (rowSet.next()) {
-                attraction = mapRowToAttraction(rowSet);
+            String wildcardAddress = "%" + address + "%";
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, wildcardAddress);
+            while (rowSet.next()) {
+                Attraction attraction = mapRowToAttraction(rowSet);
+                attractions.add(attraction);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-        return attraction;
+        return attractions;
     }
     @Override
     public List<Attraction> getAttractionByType(String typeName){
         List<Attraction> attractions = new ArrayList<>();
         String sql = "SELECT id, a.name, description, hours_of_operation, address, images, social_media, type_id " +
-                " FROM attraction a INNER JOIN type t ON t.id = a.type_id WHERE t.name ILIKE ?";
+                " FROM attraction a INNER JOIN type t ON t.id = a.type_id WHERE t.name = ?";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, typeName);
