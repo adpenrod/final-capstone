@@ -56,12 +56,12 @@ public class JdbcTypeDao implements TypeDao {
         return type;
     }
 
-    @Override
+   @Override
     public Type getTypeByName(String name) {
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Type type = null;
         String sql = "SELECT id, name " +
-                " FROM type WHERE name = ?";
+                " FROM type WHERE name ILIKE ?";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, name);
             if (rowSet.next()) {
@@ -72,6 +72,7 @@ public class JdbcTypeDao implements TypeDao {
         }
         return type;
     }
+
 
     @Override
     public Type updateType(Type type) {

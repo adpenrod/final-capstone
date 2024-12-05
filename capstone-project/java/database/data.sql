@@ -56,6 +56,6 @@ INSERT INTO badge (name, description) VALUES ('Defender of The Land', 'For those
 ('Sports Enthusiast', 'For those who have visited every stadium!'),
 ('Tree Hugger', 'For those who have visited every park!'),
 ('Art Enthusiast', 'For those who have visited every museum!'),
-('Culinary Conqueror', 'For those who have visited every resturaunt!');
+('Culinary Conqueror', 'For those who have visited every restauraunt!');
 
 COMMIT TRANSACTION;

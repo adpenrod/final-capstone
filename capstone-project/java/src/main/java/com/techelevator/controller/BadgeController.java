@@ -17,7 +17,6 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping(path = "/badges/")
 public class BadgeController {
-
     private BadgeDao badgeDao;
     private AttractionService as;
 
@@ -32,7 +31,6 @@ public class BadgeController {
         return badgeDao.getBadge();
     }
 
-
     @RequestMapping(path = "{id}", method = RequestMethod.GET)
     public Badge getBadgeByBadgeId(@PathVariable int id) {
         Badge badge = badgeDao.getBadgeById(id);
@@ -43,7 +41,6 @@ public class BadgeController {
         }
     }
 
-
     @RequestMapping(path = "name/{name}", method = RequestMethod.GET)
     public Badge getBadgeByName(@PathVariable String name) {
 
@@ -53,7 +50,7 @@ public class BadgeController {
             return badgeDao.getBadgeByName(name);
         }
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public Badge update(@Valid @RequestBody Badge badge, @PathVariable int id) {
         badge.setId(id);
@@ -65,14 +62,14 @@ public class BadgeController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Badge createBadge(@Valid @RequestBody Badge badge) {
         return badgeDao.createBadge(badge);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id, Principal principal) {
@@ -87,4 +84,3 @@ public class BadgeController {
     }
 
 }
-

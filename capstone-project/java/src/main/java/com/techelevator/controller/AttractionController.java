@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping(path = "/attractions/")
 public class AttractionController {
     private AttractionService as;
-
     private AttractionDao attractionDao;
 
     public AttractionController(AttractionService as, AttractionDao attractionDao) {
@@ -30,11 +29,7 @@ public class AttractionController {
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Attraction> listAttractions(@RequestParam(defaultValue = "") String userInput) {
-        if (userInput == "bar" || userInput == "bars") {
-            return attractionDao.getAttractionByType(userInput);
-        } else if (userInput == "restaurant" || userInput == "restaurants") {
-            return attractionDao.getAttractionByType(userInput);
-        }
+
         return attractionDao.getAttractions();
     }
 
@@ -49,20 +44,6 @@ public class AttractionController {
         }
     }
 
-
-    /*@RequestMapping(path = "={userInput}", method = RequestMethod.GET)
-    public List<Attraction> getAttractionByNameAndAddress(@PathVariable String userInput) {
-
-        if((attractionDao.getAttractionByName(userInput) == null)
-                && (attractionDao.getAttractionByAddress(userInput) == null)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction not found." );
-        } else if (attractionDao.getAttractionByName(userInput) == null) {
-
-            return attractionDao.getAttractionByAddress(userInput);
-        }else {
-            return attractionDao.getAttractionByName(userInput);
-        }
-    }*/
 
     @RequestMapping(path = "name/{userInput}", method = RequestMethod.GET)
     public List<Attraction> getAttractionByName(@PathVariable String userInput) {
@@ -102,9 +83,7 @@ public class AttractionController {
         }
     }
 
-
-
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "{id}", method = RequestMethod.PUT)
     public Attraction update(@Valid @RequestBody Attraction attraction, @PathVariable int id) {
         attraction.setId(id);
@@ -116,13 +95,13 @@ public class AttractionController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction Not Found");
         }
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Attraction createAttraction(@Valid @RequestBody Attraction attraction) {
         return attractionDao.createAttraction(attraction);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable int id, Principal principal) {
@@ -137,4 +116,3 @@ public class AttractionController {
     }
 
 }
-
