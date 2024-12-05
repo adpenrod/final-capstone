@@ -3,11 +3,11 @@
     <div class="sidebar">
       <select v-on:change="filterMarkers($event.target.value)">
         <option v-bind:value="'all'">All</option>
-        <option v-bind:value="1">Museums</option>
-        <option v-bind:value="2">Stadiums</option>
-        <option v-bind:value="3">Parks</option>
-        <option v-bind:value="4">Restaurants</option>
-        <option v-bind:value="5">Bars</option>
+        <option v-bind:value="1">Bars</option>
+        <option v-bind:value="2">Museums</option>
+        <option v-bind:value="3">Stadiums</option>
+        <option v-bind:value="4">Parks</option>
+        <option v-bind:value="5">Restaurants</option>
       </select>
     </div>
     <div id="map" ref="map"></div>
@@ -31,34 +31,34 @@ export default {
       map: null,
       markers: [],
       markersData: [
-        { latitude: 39.9656, longitude: -75.1800, title: "Phaladelphia Museum of Art", groupId: 1 },
-        { latitude: 39.9583, longitude: -75.1726, title: "The Franklin Institute", groupId: 1 },
-        { latitude: 39.9533, longitude: -75.1766, title: "Mutter Museum", groupId: 1 },
-        { latitude: 39.9528, longitude: -75.1481, title: "Nattional Constitution Center", groupId: 1 },
-        { latitude: 39.9489, longitude: -75.1467, title: "Museum of the American Revolution", groupId: 1 },
-
-        { latitude: 39.9062, longitude: -75.1675, title: "Citizens Bank Park", groupId: 2 },
-        { latitude: 39.9008, longitude: -75.1675, title: "Lincoln Financial Field", groupId: 2 },
-        { latitude: 39.9012, longitude: -75.1720, title: "Wells Fargo Center", groupId: 2 },
-        { latitude: 39.9523, longitude: -75.1905, title: "Franklin Field", groupId: 2 },
-        { latitude: 40.0171, longitude: -75.1527, title: "Marcus Foster Memorial Stadium", groupId: 2 },
-
-        { latitude: 39.9486, longitude: -75.1715, title: "Rittenhouse Square", groupId: 3 },
-        { latitude: 39.9042, longitude: -75.1809, title: "FDR Park", groupId: 3 },
-        { latitude: 39.9449, longitude: -75.1413, title: "Spruce Street Harbor Park", groupId: 3 },
-        { latitude: 39.9510, longitude: -75.1684, title: "John F. Collins Park", groupId: 3 },
-        { latitude: 39.9479, longitude: -75.1513, title: "Washington Square Park", groupId: 3 },
-
-        { latitude: 39.9721, longitude: -75.1286, title: "Bastia", groupId: 4 },
-        { latitude: 39.9456, longitude: -75.1677, title: "Rex at the Royal", groupId: 4 },
-        { latitude: 39.9425, longitude: -75.1450, title: "Provenance", groupId: 4 },
-        { latitude: 39.9478, longitude: -75.1624, title: "Little Nonna's", groupId: 4 },
-
-        { latitude: 39.9506, longitude: -75.1620, title: "McGillin's Olde Ale House", groupId: 5 },
-        { latitude: 39.9475, longitude: -75.1444, title: "Khyber Pass Pub", groupId: 5 },
-        { latitude: 39.9583, longitude: -75.1703, title: "Assembly Rooftop Lounge", groupId: 5 },
-        { latitude: 39.9473, longitude: -75.1439, title: "48 Record Bar", groupId: 5 },
-        { latitude: 39.9496, longitude: -75.1503, title: "Independence Beer Garden", groupId: 5 },
+        //{ latitude: 39.9656, longitude: -75.1800, title: "Phaladelphia Museum of Art", groupId: 1 },
+        //{ latitude: 39.9583, longitude: -75.1726, title: "The Franklin Institute", groupId: 1 },
+        //{ latitude: 39.9533, longitude: -75.1766, title: "Mutter Museum", groupId: 1 },
+        //{ latitude: 39.9528, longitude: -75.1481, title: "Nattional Constitution Center", groupId: 1 },
+        //{ latitude: 39.9489, longitude: -75.1467, title: "Museum of the American Revolution", groupId: 1 },
+//
+        //{ latitude: 39.9062, longitude: -75.1675, title: "Citizens Bank Park", groupId: 2 },
+        //{ latitude: 39.9008, longitude: -75.1675, title: "Lincoln Financial Field", groupId: 2 },
+        //{ latitude: 39.9012, longitude: -75.1720, title: "Wells Fargo Center", groupId: 2 },
+        //{ latitude: 39.9523, longitude: -75.1905, title: "Franklin Field", groupId: 2 },
+        //{ latitude: 40.0171, longitude: -75.1527, title: "Marcus Foster Memorial Stadium", groupId: 2 },
+//
+        //{ latitude: 39.9486, longitude: -75.1715, title: "Rittenhouse Square", groupId: 3 },
+        //{ latitude: 39.9042, longitude: -75.1809, title: "FDR Park", groupId: 3 },
+        //{ latitude: 39.9449, longitude: -75.1413, title: "Spruce Street Harbor Park", groupId: 3 },
+        //{ latitude: 39.9510, longitude: -75.1684, title: "John F. Collins Park", groupId: 3 },
+        //{ latitude: 39.9479, longitude: -75.1513, title: "Washington Square Park", groupId: 3 },
+//
+        //{ latitude: 39.9721, longitude: -75.1286, title: "Bastia", groupId: 4 },
+        //{ latitude: 39.9456, longitude: -75.1677, title: "Rex at the Royal", groupId: 4 },
+        //{ latitude: 39.9425, longitude: -75.1450, title: "Provenance", groupId: 4 },
+        //{ latitude: 39.9478, longitude: -75.1624, title: "Little Nonna's", groupId: 4 },
+//
+        //{ latitude: 39.9506, longitude: -75.1620, title: "McGillin's Olde Ale House", groupId: 5 },
+        //{ latitude: 39.9475, longitude: -75.1444, title: "Khyber Pass Pub", groupId: 5 },
+        //{ latitude: 39.9583, longitude: -75.1703, title: "Assembly Rooftop Lounge", groupId: 5 },
+        //{ latitude: 39.9473, longitude: -75.1439, title: "48 Record Bar", groupId: 5 },
+        //{ latitude: 39.9496, longitude: -75.1503, title: "Independence Beer Garden", groupId: 5 },
       ],
       selectedGroup: "all",
     };
@@ -70,7 +70,7 @@ export default {
       if (this.selectedGroup === "all") {
         result = this.markersData;
       } else {
-        result = this.markersData.filter(marker => marker.groupId === parseInt(this.selectedGroup));
+        result = this.markersData.filter(marker => marker.typeId === parseInt(this.selectedGroup));
       }
       return result;
     },
@@ -114,7 +114,7 @@ export default {
 
     async fetchAttractions() {
       try {
-        const response = await axios.get('/attractions', {
+        const response = await axios.get('/attractions/', {
           params: { userInput: this.selectedGroup == 'all' ? '' : this.selectedGroup }
         });
         this.markersData = response.data;
@@ -144,8 +144,8 @@ export default {
 
     },
 
-    filterMarkers(groupId) {
-      this.selectedGroup = groupId;
+    filterMarkers(typeId) {
+      this.selectedGroup = typeId;
       this.fetchAttractions();
     },
 
@@ -205,8 +205,12 @@ export default {
 
 <style scoped>
 .map-container {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    ".sidebar #map .accordion .accordion .accordion"
+    ". . .accordion .accordion .accordion"
+  ;
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -228,6 +232,8 @@ export default {
 }
 
 .accordion {
+  flex-direction: column;
+  background-color: hotpink;
   margin-bottom: 10px;
   border-radius: 5px;
   overflow: hidden;
