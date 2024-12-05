@@ -50,4 +50,12 @@ VALUES
 ('Provenance', 'Named Best Tasting Menu Experience, featuring over 20 courses blending French and Korean flavors.','Weds-Fri 5:30-10PM, Sat 5-10PM', '408 S 2nd St, Philadelphia, PA 19147', 'https://lh3.googleusercontent.com/p/AF1QipPkwRnTEr-Lht5aBEhaLXOxlUN_I3bZyxQFyjHo=s680-w680-h510', 'instagram.com/provenancephl', 5, 39.9428742, -75.1456449),
 ('Little Nonna''s', 'A cozy Italian eatery known for its classic dishes and charming outdoor seating.','Everyday 5-10PM', '1234 Locust St, Philadelphia, PA 19107', 'https://lh3.googleusercontent.com/p/AF1QipPSwYyss5hJAAgBoimJ_VlgCJxO2oPc6pkZxe2J=s680-w680-h510', 'instagram.com/littlenonnas', 5, 39.9477967, -75.1618964);
 
+
+INSERT INTO badge (name, description) VALUES ('Defender of The Land', 'For those who have visited every location!'),
+('Bar Hopper', 'For those who have visited every bar!'),
+('Sports Enthusiast', 'For those who have visited every stadium!'),
+('Tree Hugger', 'For those who have visited every park!'),
+('Art Enthusiast', 'For those who have visited every museum!'),
+('Culinary Conqueror', 'For those who have visited every resturaunt!');
+
 COMMIT TRANSACTION;

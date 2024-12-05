@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS public.badge
     id SERIAL,
     name character varying NOT NULL,
     description character varying NOT NULL,
+    image character varying,
     PRIMARY KEY (id)
 );
 

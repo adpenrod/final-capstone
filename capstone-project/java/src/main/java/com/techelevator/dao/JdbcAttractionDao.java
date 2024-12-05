@@ -111,7 +111,7 @@ public class JdbcAttractionDao implements AttractionDao{
         }
         return attractions;
     }
-
+    @Override
     public Attraction updateAttraction(Attraction attraction) {
         Attraction updatedAttraction = null;
         String sql = "UPDATE attraction SET name=?, description=?, hours_of_operation=?, address=?, images=?, social_media=?, type_id=?\n" +
@@ -132,7 +132,7 @@ public class JdbcAttractionDao implements AttractionDao{
 
         return updatedAttraction;
     }
-
+    @Override
     public int deleteAttractionById(int id){
         int numberOfRows = 0;
         String badgeDeleteSql = "DELETE FROM attraction WHERE id = ?";

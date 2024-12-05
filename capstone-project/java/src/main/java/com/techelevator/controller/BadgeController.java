@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import com.techelevator.Service.AttractionService;
 import com.techelevator.dao.BadgeDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Badge;
@@ -18,6 +19,12 @@ import java.util.List;
 public class BadgeController {
 
     private BadgeDao badgeDao;
+    private AttractionService as;
+
+    public BadgeController(BadgeDao badgeDao, AttractionService as) {
+        this.badgeDao = badgeDao;
+        this.as = as;
+    }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Badge> listBadges() {
@@ -30,14 +37,14 @@ public class BadgeController {
     public Badge getBadgeByBadgeId(@PathVariable int id) {
         Badge badge = badgeDao.getBadgeById(id);
         if (badge == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction not found.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Badge not found.");
         } else {
             return badge;
         }
     }
 
 
-    @RequestMapping(path = "{name}", method = RequestMethod.GET)
+    @RequestMapping(path = "name/{name}", method = RequestMethod.GET)
     public Badge getBadgeByName(@PathVariable String name) {
 
         if (badgeDao.getBadgeByName(name) == null) {

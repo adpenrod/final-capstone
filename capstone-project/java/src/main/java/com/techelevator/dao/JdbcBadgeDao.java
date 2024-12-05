@@ -7,10 +7,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcBadgeDao implements BadgeDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -18,7 +20,7 @@ public class JdbcBadgeDao implements BadgeDao {
     public JdbcBadgeDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
+@Override
     public Badge getBadgeById(int id){
         Badge badge = null;
         String sql = "SELECT id, name, description" +
@@ -34,7 +36,7 @@ public class JdbcBadgeDao implements BadgeDao {
         }
         return badge;
     }
-
+    @Override
     public List<Badge> getBadge() {
         List<Badge> badge = new ArrayList<>();
         String sql = "SELECT id, name, description" +
@@ -50,7 +52,7 @@ public class JdbcBadgeDao implements BadgeDao {
         }
         return badge;
     }
-
+    @Override
     public Badge getBadgeByName(String name) {
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Badge badge = null;
@@ -66,7 +68,7 @@ public class JdbcBadgeDao implements BadgeDao {
         }
         return badge;
     }
-
+    @Override
     public Badge createBadge(Badge badge) {
         Badge newBadge = null;
         String insertBadgeSql = "INSERT INTO badge ( " +
@@ -84,7 +86,7 @@ public class JdbcBadgeDao implements BadgeDao {
         }
         return newBadge;
     }
-
+    @Override
     public int deleteBadgeById(int id){
         int numberOfRows = 0;
         String badgeDeleteSql = "DELETE FROM badge WHERE id = ?";
@@ -98,7 +100,7 @@ public class JdbcBadgeDao implements BadgeDao {
         return numberOfRows;
 
     }
-
+    @Override
     public Badge updateBadge(Badge badge) {
         Badge updatedBadge = null;
         String sql = "UPDATE badge SET name=?, description=? WHERE id=?";

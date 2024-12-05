@@ -4,6 +4,15 @@ public class Badge {
     private int id;
     private String name;
     private String description;
+    String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public int getId() {
         return id;
@@ -29,10 +38,11 @@ public class Badge {
         this.description = description;
     }
 
-    public Badge(int id, String name, String description) {
+    public Badge(int id, String name, String description, String image) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.image = image;
     }
     public Badge(){
 
