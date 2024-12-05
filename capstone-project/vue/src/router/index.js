@@ -67,7 +67,7 @@ const routes = [
     name: "badge",
     component: BadgeView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
