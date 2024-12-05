@@ -4,6 +4,7 @@ import com.techelevator.model.Attraction;
 import org.w3c.dom.Attr;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface AttractionDao {
@@ -16,6 +17,6 @@ public interface AttractionDao {
     public Attraction createAttraction(Attraction attraction);
     public int deleteAttractionById(int id);
     public Attraction updateAttraction(Attraction attraction);
-    public Attraction getLatitude(int id);
-    public Attraction getLongitude(int id);
+    public BigDecimal getLatitude(int id);
+    public BigDecimal getLongitude(int id);
 }

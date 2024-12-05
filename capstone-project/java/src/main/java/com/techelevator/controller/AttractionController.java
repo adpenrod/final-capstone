@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.w3c.dom.Attr;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class AttractionController {
         }
     }
         @RequestMapping(path = "latitude/{id}", method = RequestMethod.GET )
-        public Attraction getLatitude(@PathVariable int id){
+        public BigDecimal getLatitude(@PathVariable int id){
 
             if(attractionDao.getLatitude(id) == null){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction not found.");
@@ -92,7 +93,7 @@ public class AttractionController {
             }
         }
     @RequestMapping(path = "longitude/{id}", method = RequestMethod.GET )
-    public Attraction getlongitude(@PathVariable int id){
+    public BigDecimal getLongitude(@PathVariable int id){
 
         if(attractionDao.getLongitude(id) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction not found.");

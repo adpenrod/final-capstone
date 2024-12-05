@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.math.BigDecimal;
+
 public class Attraction {
 
     private int id;
@@ -10,8 +12,8 @@ public class Attraction {
     private String image;
     private String socialMedia;
     private int typeId;
-    private double latitude;
-    private double longitude;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
 
     public int getId() {
         return id;
@@ -77,19 +79,19 @@ public class Attraction {
         this.typeId = typeId;
     }
 
-    public double getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
@@ -98,7 +100,7 @@ public class Attraction {
 
 
 
-    public Attraction(int id, String name, String description, String hoursOfOperation, String address, String image, String socialMedia, int typeId, double latitude, double longitude) {
+    public Attraction(int id, String name, String description, String hoursOfOperation, String address, String image, String socialMedia, int typeId, BigDecimal latitude, BigDecimal longitude) {
         this.id = id;
         this.name = name;
         this.description = description;

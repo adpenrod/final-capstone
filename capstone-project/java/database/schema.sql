@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS public.attraction
     images character varying,
     social_media character varying,
     type_id integer,
-    latitude numeric,
-    longitude numeric,
+    latitude numeric (12,6),
+    longitude numeric (12,6),
     PRIMARY KEY (id)
 );
 
