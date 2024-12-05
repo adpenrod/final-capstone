@@ -10,7 +10,8 @@ public class Attraction {
     private String image;
     private String socialMedia;
     private int typeId;
-
+    private double latitude;
+    private double longitude;
 
     public int getId() {
         return id;
@@ -76,11 +77,28 @@ public class Attraction {
         this.typeId = typeId;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public Attraction() {}
 
 
 
-    public Attraction(int id, String name, String description, String hoursOfOperation, String address, String image, String socialMedia, int typeId) {
+
+    public Attraction(int id, String name, String description, String hoursOfOperation, String address, String image, String socialMedia, int typeId, double latitude, double longitude) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -89,5 +107,7 @@ public class Attraction {
         this.image = image;
         this.socialMedia = socialMedia;
         this.typeId = typeId;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }

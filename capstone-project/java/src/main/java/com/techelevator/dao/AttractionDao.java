@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Attraction;
+import org.w3c.dom.Attr;
 
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface AttractionDao {
     public Attraction createAttraction(Attraction attraction);
     public int deleteAttractionById(int id);
     public Attraction updateAttraction(Attraction attraction);
+    public Attraction getLatitude(int id);
+    public Attraction getLongitude(int id);
 }

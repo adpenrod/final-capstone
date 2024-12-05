@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.w3c.dom.Attr;
 
 import java.security.Principal;
 import java.util.List;
@@ -81,6 +82,27 @@ public class AttractionController {
             return attractionDao.getAttractionByAddress(userInput);
         }
     }
+        @RequestMapping(path = "latitude/{id}", method = RequestMethod.GET )
+        public Attraction getLatitude(@PathVariable int id){
+
+            if(attractionDao.getLatitude(id) == null){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction not found.");
+            }else {
+                return attractionDao.getLatitude(id);
+            }
+        }
+    @RequestMapping(path = "longitude/{id}", method = RequestMethod.GET )
+    public Attraction getlongitude(@PathVariable int id){
+
+        if(attractionDao.getLongitude(id) == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attraction not found.");
+        }else {
+            return attractionDao.getLongitude(id);
+        }
+    }
+
+
+
 
     @RequestMapping(path = "{id}", method = RequestMethod.PUT)
     public Attraction update(@Valid @RequestBody Attraction attraction, @PathVariable int id) {

@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Attraction;
 import com.techelevator.model.Badge;
+import net.sf.jsqlparser.statement.select.Select;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -110,6 +111,40 @@ public class JdbcAttractionDao implements AttractionDao{
             throw new DaoException("Unable to connect to server or database", e);
         }
         return attractions;
+    }
+
+    @Override
+    public Attraction getLatitude(int id) {
+        Attraction latitude = null;
+        String sql = "SELECT latitude FROM attraction WHERE id = ?; ";
+
+        try{
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+        if(result.next()) {
+            latitude = mapRowToAttraction(result);
+        }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return latitude;
+    }
+
+    @Override
+    public Attraction getLongitude(int id) {
+        Attraction longitude = null;
+        String sql = "SELECT longitude FROM attraction WHERE id = ? ";
+
+        try{
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+            if(result.next()) {
+                longitude = mapRowToAttraction(result);
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return longitude;
     }
     @Override
     public Attraction updateAttraction(Attraction attraction) {
