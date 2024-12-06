@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS public.user_attraction
     has_visited boolean NOT NULL
 );
 
+
 DROP TABLE IF EXISTS user_badge;
 
 CREATE TABLE IF NOT EXISTS public.user_badge
