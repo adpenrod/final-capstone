@@ -33,6 +33,7 @@
 
 <script>
 import axios from 'axios';
+import BadgeService from '../services/BadgeService.js';
 
 
 export default {
@@ -88,15 +89,15 @@ export default {
             evt.currentTarget.className += "active";
         },
 
-        async fetchBadges() {
-            try{
-                const response = await axios.get('/badges/');
+        fetchBadges() {
+           
+            BadgeService.getBadges().then(response => {
                 const badges = response.data;
-
                 this.museums = badges.filter(badge => badge.category === 'Museum');
-            }catch (error) {
+            }).catch(error => {
                 console.error('Error fetching badges:', error);
-            }
+            })
+
         }
 
     }
