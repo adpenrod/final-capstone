@@ -15,6 +15,9 @@
       <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
       <div class="content">
         <p>{{ marker.description }}</p>
+        <p>Hours: {{ marker.hoursOfOperation }}</p>
+        <p>Address: {{ marker.address }}</p>
+        <p>Social Media: {{ marker.socialMedia }}</p>
         <img :src="marker.imageUrl" alt="Image of attraction">
       </div>
     </div>
@@ -79,7 +82,7 @@ export default {
 
   mounted() {
     const loader = new Loader({
-      apiKey: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg", // Replace with your API key
+      apiKey: "AIzaSyBqXUJKJ-biBNEFS4eDEVxPM-elng6ewqw", // Replace with your API key
       libraries: ["places"], // Include the Places library
     });
 

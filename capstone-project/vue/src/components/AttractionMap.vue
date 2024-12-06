@@ -1,6 +1,13 @@
 <template>
     <div class="map-container">
         <h2>Directions to Location</h2>
+
+        <select v-model="selectedAttraction" v-on:change="displayDirections">
+            <option v-for="attraction in attractions" :key="attraction.id" :value="attraction">
+                {{ attraction.name }}
+            </option>
+        </select>
+
         <div ref="map" class="map"></div>
     </div>
 </template>
@@ -19,7 +26,9 @@ export default {
             attractions: [],
             userLocation: null,
             map: null,
-        }
+            directionsRenderer: null,
+            currentAttractionMarker: null,
+        };
     },
 
     computed: {
@@ -31,6 +40,7 @@ export default {
 
         this.createMap();
         this.addUserLocation();
+        this.fetchAttractions();
 
     },
 
@@ -38,7 +48,7 @@ export default {
 
         createMap() {
             const loader = new Loader({
-                apiKey: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+                apiKey: "AIzaSyBqXUJKJ-biBNEFS4eDEVxPM-elng6ewqw",
                 libraries: ["places"],
             });
 
@@ -47,8 +57,19 @@ export default {
                     center: { lat: 39.9526, lng: -75.1652 },
                     zoom: 12,
                 });
+
+                this.directionsRenderer = new google.maps.DirectionsRenderer();
+                this.directionsRenderer.setMap(this.map);
             });
 
+        },
+
+        fetchAttractions(){
+            AttractionsService.listAttractions().then((response) => {
+                this.attractions = response.data;
+            }).catch((error) => {
+                console.error("Error fetching attractions:", error);
+            });
         },
 
         addUserLocation() {
@@ -76,6 +97,44 @@ export default {
             );
 
         },
+
+        displayDirections(){
+
+            if (!this.selectedAttraction){
+                
+                if (this.currentAttractionMarker) {
+                    this.currentAttractionMarker.setMap(null);
+                    this.currentAttractionMarker = null;
+                }
+
+                if (this.directionsRenderer) {
+                    this.directionsRenderer.setDirections({routes: [] });
+                }
+                return;
+            }
+
+            const destination = {
+                lat: parseFloat(this.selectedAttraction.latitude),
+                lng: parseFloat(this.selectedAttraction.longitude)
+            };
+
+            const request = {
+                origin: this.userLocation,
+                destination: destination,
+                travelMode: google.maps.TravelMode.WALKING,
+            };
+
+            const directionsService = new google.maps.DirectionsService();
+            directionsService.route(request, (response, status) => {
+                if (status === google.maps.DirectionsStatus.OK){
+                    this.directionsRenderer.setDirections(response);
+                }
+            });
+
+            if (this.currentAttractionMarker){
+                this.currentAttractionMarker.setMap(null);
+            }
+        }
     }
 
 }
@@ -92,6 +151,12 @@ export default {
 .map {
     width: 100%;
     height: 500px;
+}
+
+select{
+    height: 10vh;
+    margin: 20px;
+    padding: 10px;
 }
 </style>
 
