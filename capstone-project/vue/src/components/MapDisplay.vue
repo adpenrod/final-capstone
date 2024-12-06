@@ -1,6 +1,6 @@
 <template>
   <div class="map-container">
-    <div class="sidebar">
+    <div class="dropdown">
       <select v-on:change="filterMarkers($event.target.value)">
         <option v-bind:value="'all'">All</option>
         <option v-bind:value="1">Bars</option>
@@ -12,7 +12,7 @@
     </div>
     <div id="map" ref="map"></div>
     <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
-      <summary v-on:click="toggleAccordion(index)">{{ marker.title }}</summary>
+      <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
       <div class="content">
         <p>{{ marker.description }}</p>
         <img :src="marker.imageUrl" alt="Image of attraction">
@@ -112,23 +112,21 @@ export default {
     //});
     //},
 
-    async fetchAttractions() {
-      try {
-        const response = await axios.get('/attractions/', {
-          params: { userInput: this.selectedGroup == 'all' ? '' : this.selectedGroup }
-        });
+    fetchAttractions() {
+      axios.get("/attractions/").then(response => {
         this.markersData = response.data;
         this.displayMarkers();
-      } catch (error) {
-        console.error('Error fetching attractions:', error);
-      }
+      }).catch(error => {
+        console.error("Error fetching attractions:", error);
+      });
+        
     },
 
     createMarker(markerData) {
       return new google.maps.Marker({
         position: { lat: markerData.latitude, lng: markerData.longitude },
         map: this.map,
-        title: markerData.title
+        name: markerData.name
       });
     },
 
@@ -150,15 +148,8 @@ export default {
     },
 
     toggleAccordion(index) {
-      const accordion = document.getElementById('accordion-' + index);
-      const content = accordion.querySelector('.content');
-      const summary = accordion.querySelector('summary');
-
-      if (accordion.open) {
-        this.shrinkAccordion(accordion, content, summary);
-      } else {
-        this.expandAccordion(accordion, content, summary);
-      }
+      const accordion = document.getElementById(`accordion-${index}`);
+      accordion.open = !accordion.open;
     },
 
     expandAccordion(accordion, content, summary) {
@@ -207,8 +198,9 @@ export default {
 .map-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
   grid-template-areas: 
-    ".sidebar #map .accordion .accordion .accordion"
+    "#map #map .accordion .accordion .accordion"
     ". . .accordion .accordion .accordion"
   ;
   width: 100%;
