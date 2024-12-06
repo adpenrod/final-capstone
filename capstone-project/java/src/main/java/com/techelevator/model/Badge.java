@@ -4,7 +4,8 @@ public class Badge {
     private int id;
     private String name;
     private String description;
-    String image;
+    private String image;
+    private String criteria;
 
     public String getImage() {
         return image;
@@ -38,11 +39,20 @@ public class Badge {
         this.description = description;
     }
 
-    public Badge(int id, String name, String description, String image) {
+    public String getCriteria() {
+        return criteria;
+    }
+
+    public void setCriteria(String criteria) {
+        this.criteria = criteria;
+    }
+
+    public Badge(int id, String name, String description, String image, String criteria) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.image = image;
+        this.criteria = criteria;
     }
     public Badge(){
 

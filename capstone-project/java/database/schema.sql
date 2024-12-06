@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS public.badge
     name character varying NOT NULL,
     description character varying NOT NULL,
     image character varying,
+    criteria character varying,
     PRIMARY KEY (id)
 );
 
@@ -77,7 +78,8 @@ DROP TABLE IF EXISTS user_badge;
 CREATE TABLE IF NOT EXISTS public.user_badge
 (
     user_id integer NOT NULL,
-    badge_id integer NOT NULL
+    badge_id integer NOT NULL,
+    earned_time timestamp without time zone
 );
 
 ALTER TABLE public.user_attraction
