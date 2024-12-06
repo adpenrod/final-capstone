@@ -36,24 +36,24 @@ export default {
         //{ latitude: 39.9533, longitude: -75.1766, title: "Mutter Museum", groupId: 1 },
         //{ latitude: 39.9528, longitude: -75.1481, title: "Nattional Constitution Center", groupId: 1 },
         //{ latitude: 39.9489, longitude: -75.1467, title: "Museum of the American Revolution", groupId: 1 },
-//
+        //
         //{ latitude: 39.9062, longitude: -75.1675, title: "Citizens Bank Park", groupId: 2 },
         //{ latitude: 39.9008, longitude: -75.1675, title: "Lincoln Financial Field", groupId: 2 },
         //{ latitude: 39.9012, longitude: -75.1720, title: "Wells Fargo Center", groupId: 2 },
         //{ latitude: 39.9523, longitude: -75.1905, title: "Franklin Field", groupId: 2 },
         //{ latitude: 40.0171, longitude: -75.1527, title: "Marcus Foster Memorial Stadium", groupId: 2 },
-//
+        //
         //{ latitude: 39.9486, longitude: -75.1715, title: "Rittenhouse Square", groupId: 3 },
         //{ latitude: 39.9042, longitude: -75.1809, title: "FDR Park", groupId: 3 },
         //{ latitude: 39.9449, longitude: -75.1413, title: "Spruce Street Harbor Park", groupId: 3 },
         //{ latitude: 39.9510, longitude: -75.1684, title: "John F. Collins Park", groupId: 3 },
         //{ latitude: 39.9479, longitude: -75.1513, title: "Washington Square Park", groupId: 3 },
-//
+        //
         //{ latitude: 39.9721, longitude: -75.1286, title: "Bastia", groupId: 4 },
         //{ latitude: 39.9456, longitude: -75.1677, title: "Rex at the Royal", groupId: 4 },
         //{ latitude: 39.9425, longitude: -75.1450, title: "Provenance", groupId: 4 },
         //{ latitude: 39.9478, longitude: -75.1624, title: "Little Nonna's", groupId: 4 },
-//
+        //
         //{ latitude: 39.9506, longitude: -75.1620, title: "McGillin's Olde Ale House", groupId: 5 },
         //{ latitude: 39.9475, longitude: -75.1444, title: "Khyber Pass Pub", groupId: 5 },
         //{ latitude: 39.9583, longitude: -75.1703, title: "Assembly Rooftop Lounge", groupId: 5 },
@@ -90,6 +90,7 @@ export default {
       });
 
       this.fetchAttractions();
+      this.addUserLocation();
 
       // Add event listener for pothole marker creation
       //.map.addListener("click", (event) => {
@@ -119,7 +120,7 @@ export default {
       }).catch(error => {
         console.error("Error fetching attractions:", error);
       });
-        
+
     },
 
     createMarker(markerData) {
@@ -190,6 +191,32 @@ export default {
         accordion.style.overflow = '';
       };
     },
+
+    addUserLocation() {
+
+      navigator.geolocation.getCurrentPosition(
+
+        (position) => {
+          this.userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          }
+
+
+          new google.maps.Marker({
+            position: this.userLocation,
+            map: this.map,
+            title: "You are here",
+            icon: {
+              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            },
+          });
+
+          this.map.setCenter(this.userLocation);
+        },
+      );
+
+    },
   },
 };
 </script>
@@ -199,7 +226,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
-  grid-template-areas: 
+  grid-template-areas:
     "#map #map .accordion .accordion .accordion"
     ". . .accordion .accordion .accordion"
   ;
@@ -220,6 +247,7 @@ export default {
   padding: 10px;
   background-color: #d8dde2e0;
   height: 100vh;
+  width: 20%;
   box-sizing: border-box;
 }
 
@@ -241,7 +269,7 @@ summary {
   margin: 0;
 }
 
-details[open] summary{
+details[open] summary {
   border-bottom-color: #000;
 }
 
