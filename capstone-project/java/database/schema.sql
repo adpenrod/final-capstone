@@ -1,5 +1,17 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS checkin;
+
+CREATE TABLE IF NOT EXISTS public.checkin
+(
+    id SERIAL,
+    user_id integer NOT NULL,
+    attraction_id integer NOT NULL,
+    checkin_time timestamp without time zone,
+    notes character varying,
+    PRIMARY KEY (id)
+);
+
 DROP TABLE IF EXISTS attraction;
 
 CREATE TABLE IF NOT EXISTS public.attraction
