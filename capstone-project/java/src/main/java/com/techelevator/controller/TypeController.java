@@ -51,7 +51,7 @@ public class TypeController {
             return typeDao.getTypeByName(name);
         }
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "{id}", method = RequestMethod.PUT)
     public Type update (@Valid @RequestBody Type type,@PathVariable int id){
         type.setId(id);
@@ -63,14 +63,14 @@ public class TypeController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Type createType (@Valid @RequestBody Type type){
         return typeDao.createType(type);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
     public void delete ( @PathVariable int id, Principal principal){

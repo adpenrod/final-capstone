@@ -118,10 +118,10 @@ public class JdbcCheckinDao implements CheckinDao {
         Checkin newCheckin = null;
         String insertCheckinSql = "INSERT INTO checkin ( " +
                 " user_id, attraction_id, checkin_time, notes) " +
-                " VALUES ( ?, ?, ?, ?);" +
+                " VALUES ( ?, ?, ?, ?)" +
                 " RETURNING checkin_id";
         try {
-            int newCheckinId = jdbcTemplate.queryForObject(insertCheckinSql, int.class, checkin.getCheckinId(), checkin.getUserId(),
+            int newCheckinId = jdbcTemplate.queryForObject(insertCheckinSql, int.class, checkin.getUserId(),
                     checkin.getAttractionId(), checkin.getCheckinTime(), checkin.getNotes());
             newCheckin = getCheckinByCheckinId(newCheckinId);
         } catch (CannotGetJdbcConnectionException e) {
@@ -136,7 +136,7 @@ public class JdbcCheckinDao implements CheckinDao {
         checkin.setCheckinId(rs.getInt("checkin_id"));
         checkin.setUserId(rs.getInt("user_id"));
         checkin.setAttractionId(rs.getInt("attraction_id"));
-        checkin.setCheckinTime((LocalDateTime) rs.getObject("checkin_time"));
+        checkin.setCheckinTime(rs.getTimestamp("checkin_time").toLocalDateTime());
         checkin.setNotes(rs.getString("notes"));
 
         return checkin;

@@ -189,7 +189,7 @@ public class JdbcAttractionDao implements AttractionDao{
         Attraction newAttraction = null;
         String insertAttractionSql = "INSERT INTO attraction ( " +
                 " name, description, hours_of_operation, address, images, social_media, type_id, latitude, longitude) " +
-                " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?);" +
+                " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
                 " RETURNING attraction_id";
 
         try {

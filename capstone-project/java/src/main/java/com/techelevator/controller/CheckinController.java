@@ -28,8 +28,8 @@ public class CheckinController {
     public List<Checkin> allUserCheckins() {
         return checkinDao.getAllCheckins();
     }
-    @RequestMapping(path = "attraction", method = RequestMethod.GET)
-    public List<Checkin> getCheckinsByAttractionId(int attractionId) {
+    @RequestMapping(path = "attraction/{attractionId}", method = RequestMethod.GET)
+    public List<Checkin> getCheckinsByAttractionId(@PathVariable int attractionId ) {
         return checkinDao.getCheckinsByAttractionId(attractionId);
     }
 

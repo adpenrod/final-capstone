@@ -77,7 +77,7 @@ public class JdbcTypeDao implements TypeDao {
     @Override
     public Type updateType(Type type) {
         Type updatedType = null;
-        String sql = "UPDATE type SET name=?,\n" +
+        String sql = "UPDATE type SET name=?\n" +
                 "\tWHERE type_id=?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, type.getName(), type.getId());
@@ -99,9 +99,9 @@ public class JdbcTypeDao implements TypeDao {
     @Override
     public Type createType(Type type) {
         Type newType = null;
-        String insertTypeSql = "INSERT INTO type ( " +
+        String insertTypeSql = "INSERT INTO type (" +
                 " name) " +
-                " VALUES (?);" +
+                " VALUES (?)" +
                 " RETURNING type_id";
 
         try {
