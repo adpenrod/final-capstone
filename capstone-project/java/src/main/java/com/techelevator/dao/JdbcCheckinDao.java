@@ -117,12 +117,12 @@ public class JdbcCheckinDao implements CheckinDao {
     public Checkin createCheckin(Checkin checkin) {
         Checkin newCheckin = null;
         String insertCheckinSql = "INSERT INTO checkin ( " +
-                " user_id, attraction_id, checkin_time, notes) " +
-                " VALUES ( ?, ?, ?, ?)" +
+                " user_id, attraction_id, notes) " +
+                " VALUES (?, ?, ?)" +
                 " RETURNING checkin_id";
         try {
             int newCheckinId = jdbcTemplate.queryForObject(insertCheckinSql, int.class, checkin.getUserId(),
-                    checkin.getAttractionId(), checkin.getCheckinTime(), checkin.getNotes());
+                    checkin.getAttractionId(), checkin.getNotes());
             newCheckin = getCheckinByCheckinId(newCheckinId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);

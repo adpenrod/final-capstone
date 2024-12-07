@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS public.checkin
     checkin_id SERIAL,
     user_id integer NOT NULL,
     attraction_id integer NOT NULL,
-    checkin_time timestamp without time zone,
+    checkin_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     notes character varying,
     PRIMARY KEY (checkin_id)
 );

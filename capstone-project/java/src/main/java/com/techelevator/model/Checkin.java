@@ -6,19 +6,11 @@ public class Checkin {
     private int checkinId;
     private int userId;
     private int attractionId;
-    private LocalDateTime checkinTime;
+    private LocalDateTime checkinTime = LocalDateTime.now();
     private String notes;
 
     public Checkin() {
         this.checkinId = checkinId;
-    }
-
-    public Checkin(int checkinId, int userId, int attractionId, LocalDateTime checkinTime, String notes) {
-        this.checkinId = checkinId;
-        this.userId = userId;
-        this.attractionId = attractionId;
-        this.checkinTime = checkinTime;
-        this.notes = notes;
     }
 
     public int getCheckinId() {
