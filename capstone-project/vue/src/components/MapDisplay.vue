@@ -2,18 +2,16 @@
   <div class="map-container">
     <div class="dropdown">
       <select v-on:change="filterMarkers($event.target.value)">
-        <option v-bind:value="'all'">All</option>
-        <option v-bind:value="1">Bars</option>
-        <option v-bind:value="2">Museums</option>
-        <option v-bind:value="3">Stadiums</option>
-        <option v-bind:value="4">Parks</option>
-        <option v-bind:value="5">Restaurants</option>
+        <option value="all">All</option>
+        <option v-for="type in types" :key="type.type_id" :value="type.type_id">
+          {{ type.name }}
+        </option>
       </select>
     </div>
     <div id="map" ref="map"></div>
     <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
       <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
-      <div class="content">
+      <div class="accordion-content">
         <p>{{ marker.description }}</p>
         <p>Hours: {{ marker.hoursOfOperation }}</p>
         <p>Address: {{ marker.address }}</p>
@@ -24,64 +22,48 @@
   </div>
 </template>
 
+
 <script>
 import axios from 'axios';
 import { Loader } from "@googlemaps/js-api-loader";
 
 export default {
+
   data() {
+
     return {
       map: null,
       markers: [],
-      markersData: [
-        //{ latitude: 39.9656, longitude: -75.1800, title: "Phaladelphia Museum of Art", groupId: 1 },
-        //{ latitude: 39.9583, longitude: -75.1726, title: "The Franklin Institute", groupId: 1 },
-        //{ latitude: 39.9533, longitude: -75.1766, title: "Mutter Museum", groupId: 1 },
-        //{ latitude: 39.9528, longitude: -75.1481, title: "Nattional Constitution Center", groupId: 1 },
-        //{ latitude: 39.9489, longitude: -75.1467, title: "Museum of the American Revolution", groupId: 1 },
-        //
-        //{ latitude: 39.9062, longitude: -75.1675, title: "Citizens Bank Park", groupId: 2 },
-        //{ latitude: 39.9008, longitude: -75.1675, title: "Lincoln Financial Field", groupId: 2 },
-        //{ latitude: 39.9012, longitude: -75.1720, title: "Wells Fargo Center", groupId: 2 },
-        //{ latitude: 39.9523, longitude: -75.1905, title: "Franklin Field", groupId: 2 },
-        //{ latitude: 40.0171, longitude: -75.1527, title: "Marcus Foster Memorial Stadium", groupId: 2 },
-        //
-        //{ latitude: 39.9486, longitude: -75.1715, title: "Rittenhouse Square", groupId: 3 },
-        //{ latitude: 39.9042, longitude: -75.1809, title: "FDR Park", groupId: 3 },
-        //{ latitude: 39.9449, longitude: -75.1413, title: "Spruce Street Harbor Park", groupId: 3 },
-        //{ latitude: 39.9510, longitude: -75.1684, title: "John F. Collins Park", groupId: 3 },
-        //{ latitude: 39.9479, longitude: -75.1513, title: "Washington Square Park", groupId: 3 },
-        //
-        //{ latitude: 39.9721, longitude: -75.1286, title: "Bastia", groupId: 4 },
-        //{ latitude: 39.9456, longitude: -75.1677, title: "Rex at the Royal", groupId: 4 },
-        //{ latitude: 39.9425, longitude: -75.1450, title: "Provenance", groupId: 4 },
-        //{ latitude: 39.9478, longitude: -75.1624, title: "Little Nonna's", groupId: 4 },
-        //
-        //{ latitude: 39.9506, longitude: -75.1620, title: "McGillin's Olde Ale House", groupId: 5 },
-        //{ latitude: 39.9475, longitude: -75.1444, title: "Khyber Pass Pub", groupId: 5 },
-        //{ latitude: 39.9583, longitude: -75.1703, title: "Assembly Rooftop Lounge", groupId: 5 },
-        //{ latitude: 39.9473, longitude: -75.1439, title: "48 Record Bar", groupId: 5 },
-        //{ latitude: 39.9496, longitude: -75.1503, title: "Independence Beer Garden", groupId: 5 },
+      markersData: [],
+      types: [
+        { type_id: 1, name: 'Bars' },
+        { type_id: 2, name: 'Museums' },
+        { type_id: 3, name: 'Stadiums' },
+        { type_id: 4, name: 'Parks' },
+        { type_id: 5, name: 'Restaurants' }
       ],
       selectedGroup: "all",
     };
   },
+
   computed: {
 
     filteredMarkers() {
-      let result;
+
       if (this.selectedGroup === "all") {
-        result = this.markersData;
-      } else {
-        result = this.markersData.filter(marker => marker.typeId === parseInt(this.selectedGroup));
+        return this.markersData;
       }
-      return result;
+      
+      return this.markersData.filter(marker => marker.typeId === parseInt(this.selectedGroup));
+
     },
 
   },
 
   mounted() {
+
     const loader = new Loader({
+
       apiKey: "AIzaSyBqXUJKJ-biBNEFS4eDEVxPM-elng6ewqw", // Replace with your API key
       libraries: ["places"], // Include the Places library
     });
@@ -95,31 +77,32 @@ export default {
       this.fetchAttractions();
       this.addUserLocation();
 
-      // Add event listener for pothole marker creation
-      //.map.addListener("click", (event) => {
-      //this.createAttractionMarker(event.latLng);
-      //});
     });
   },
-  methods: {
-    //createAttractionMarker(location) {
-    // google.maps.Marker({
-    //position: location,
-    //map: this.map,
-    //title: "Attraction",
-    //});
 
-    // Send POST request to your backend to update the database
-    //this.$axios.post("/attractions", {
-    //latitude: location.lat(),
-    //longitude: location.lng(),
-    //});
-    //},
+  methods: {
 
     fetchAttractions() {
-      axios.get("/attractions/").then(response => {
-        this.markersData = response.data;
+
+      axios.get('/attractions/').then(response => {
+
+        this.markersData = response.data.map(attraction => ({
+
+          id: attraction.id,
+          name: attraction.name,
+          description: attraction.description,
+          hoursOfOperation: attraction.hoursOfOperation,
+          address: attraction.address,
+          socialMedia: attraction.socialMedia,
+          imageUrl: attraction.imageUrl,
+          typeId: attraction.typeId,
+          latitude: attraction.latitude,
+          longitude: attraction.longitude,
+
+        }));
+
         this.displayMarkers();
+
       }).catch(error => {
         console.error("Error fetching attractions:", error);
       });
@@ -127,101 +110,119 @@ export default {
     },
 
     createMarker(markerData) {
+
       return new google.maps.Marker({
+
         position: { lat: markerData.latitude, lng: markerData.longitude },
         map: this.map,
-        name: markerData.name
+        title: markerData.name
+
       });
+
     },
 
     displayMarkers() {
 
       this.markers.forEach(marker => marker.setMap(null));
       this.markers = [];
-
       this.filteredMarkers.forEach(markerData => {
         const marker = this.createMarker(markerData);
         this.markers.push(marker);
-      });
 
+      });
     },
 
     filterMarkers(typeId) {
+
       this.selectedGroup = typeId;
       this.displayMarkers();
+
     },
 
     toggleAccordion(index) {
+
       const accordion = document.getElementById(`accordion-${index}`);
-      accordion.open = !accordion.open;
+      if (accordion.open) {
+        this.shrinkAccordion(accordion);
+      } else {
+        this.expandAccordion(accordion);
+      }
     },
 
-    expandAccordion(accordion, content, summary) {
-      const startHeight = `${accordion.offsetHeight}px`;
-      const endHeight = `${summary.offsetHeight + content.offsetHeight}px`;
+    expandAccordion(accordion) {
 
-      accordion.style.height = startHeight;
+      const content = accordion.querySelector('.accordion-content');
+      const summary = accordion.querySelector('summary');
+      const startHeight = 0;
+      const endHeight = content.scrollHeight + summary.offsetHeight;
+
+      accordion.style.maxHeight = `${startHeight}px`;
       accordion.open = true;
 
       const animation = accordion.animate({
-        height: [startHeight, endHeight],
+        maxHeight: [startHeight, endHeight],
       }, {
         duration: 400,
         easing: 'ease-out',
       });
 
       animation.onfinish = () => {
-        accordion.style.height = '';
-        accordion.style.overflow = '';
+
+        accordion.style.maxHeight = '';
       };
+
     },
 
-    shrinkAccordion(accordion, content, summary) {
-      const startHeight = `${accordion.offsetHeight}px`;
-      const endHeight = `${summary.offsetHeight}px`;
+    shrinkAccordion(accordion) {
+
+      const content = accordion.querySelector('.accordion-content');
+      const summary = accordion.querySelector('summary');
+      const startHeight = content.scrollHeight + summary.offsetHeight;
+      const endHeight = 0;
 
       accordion.style.overflow = 'hidden';
 
       const animation = accordion.animate({
-        height: [startHeight, endHeight],
+        maxHeight: [startHeight, endHeight],
       }, {
         duration: 400,
         easing: 'ease-out',
       });
 
       animation.onfinish = () => {
-        accordion.style.height = '';
-        accordion.style.overflow = '';
+        accordion.style.maxHeight = '';
+        accordion.open = false;
       };
+
     },
 
     addUserLocation() {
 
-      navigator.geolocation.getCurrentPosition(
+      navigator.geolocation.getCurrentPosition((position) => {
 
-        (position) => {
-          this.userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          }
+        this.userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }
 
+        new google.maps.Marker({
+          position: this.userLocation,
+          map: this.map,
+          title: "You are here",
+          icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+          },
 
-          new google.maps.Marker({
-            position: this.userLocation,
-            map: this.map,
-            title: "You are here",
-            icon: {
-              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-            },
-          });
+        });
 
-          this.map.setCenter(this.userLocation);
-        },
+        this.map.setCenter(this.userLocation);
+
+      },
       );
-
     },
   },
 };
+
 </script>
 
 <style scoped>

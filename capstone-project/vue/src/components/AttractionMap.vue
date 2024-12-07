@@ -3,7 +3,7 @@
         <h2>Directions to Location</h2>
 
         <select v-model="selectedAttraction" v-on:change="displayDirections">
-            <option v-for="attraction in attractions" :key="attraction.id" :value="attraction">
+            <option v-for="attraction in attractions" :key="attraction.type_id" :value="attraction">
                 {{ attraction.name }}
             </option>
         </select>
