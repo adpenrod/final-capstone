@@ -3,30 +3,30 @@ package com.techelevator.model;
 import java.time.LocalDateTime;
 
 public class Checkin {
-    private int id;
+    private int checkinId;
     private int userId;
     private int attractionId;
     private LocalDateTime checkinTime;
     private String notes;
 
-    public Checkin(int id) {
-        this.id = id;
+    public Checkin() {
+        this.checkinId = checkinId;
     }
 
-    public Checkin(int id, int userId, int attractionId, LocalDateTime checkinTime, String notes) {
-        this.id = id;
+    public Checkin(int checkinId, int userId, int attractionId, LocalDateTime checkinTime, String notes) {
+        this.checkinId = checkinId;
         this.userId = userId;
         this.attractionId = attractionId;
         this.checkinTime = checkinTime;
         this.notes = notes;
     }
 
-    public int getId() {
-        return id;
+    public int getCheckinId() {
+        return checkinId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCheckinId(int checkinId) {
+        this.checkinId = checkinId;
     }
 
     public int getUserId() {

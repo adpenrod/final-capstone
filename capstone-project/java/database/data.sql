@@ -4,11 +4,11 @@ INSERT INTO users (username,password_hash,role,email) VALUES ('user','$2a$08$UkV
 INSERT INTO users (username,password_hash,role,email) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN', 'user@gmail.com');
 
 
-INSERT INTO type (id, name) VALUES (1, 'bar');
-INSERT INTO type (id, name) VALUES (2, 'museum');
-INSERT INTO type (id, name) VALUES (3, 'stadium');
-INSERT INTO type (id, name) VALUES (4, 'park');
-INSERT INTO type (id, name) VALUES (5, 'restaurant');
+INSERT INTO type (type_id, name) VALUES (1, 'bar');
+INSERT INTO type (type_id, name) VALUES (2, 'museum');
+INSERT INTO type (type_id, name) VALUES (3, 'stadium');
+INSERT INTO type (type_id, name) VALUES (4, 'park');
+INSERT INTO type (type_id, name) VALUES (5, 'restaurant');
 
 
 

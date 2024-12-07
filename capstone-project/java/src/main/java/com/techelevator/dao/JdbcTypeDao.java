@@ -25,7 +25,7 @@ public class JdbcTypeDao implements TypeDao {
     @Override
     public List<Type> getTypes() {
         List<Type> types = new ArrayList<>();
-        String sql = "SELECT id, name" +
+        String sql = "SELECT type_id, name" +
                 " FROM type ORDER BY name ASC";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -42,8 +42,8 @@ public class JdbcTypeDao implements TypeDao {
     @Override
     public Type getTypeById(int id) {
         Type type = null;
-        String sql = "SELECT id, name " +
-                " FROM type WHERE id = ?";
+        String sql = "SELECT type_id, name " +
+                " FROM type WHERE type_id = ?";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
@@ -60,7 +60,7 @@ public class JdbcTypeDao implements TypeDao {
     public Type getTypeByName(String name) {
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Type type = null;
-        String sql = "SELECT id, name " +
+        String sql = "SELECT type_id, name " +
                 " FROM type WHERE name ILIKE ?";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, name);
@@ -78,7 +78,7 @@ public class JdbcTypeDao implements TypeDao {
     public Type updateType(Type type) {
         Type updatedType = null;
         String sql = "UPDATE type SET name=?,\n" +
-                "\tWHERE id=?";
+                "\tWHERE type_id=?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, type.getName(), type.getId());
 
@@ -102,7 +102,7 @@ public class JdbcTypeDao implements TypeDao {
         String insertTypeSql = "INSERT INTO type ( " +
                 " name) " +
                 " VALUES (?);" +
-                " RETURNING id";
+                " RETURNING type_id";
 
         try {
             int newTypeId = jdbcTemplate.queryForObject(insertTypeSql, int.class, type.getName());
@@ -118,7 +118,7 @@ public class JdbcTypeDao implements TypeDao {
     @Override
     public int deleteTypeById(int id) {
         int numberOfRows = 0;
-        String typeDeleteSql = "DELETE FROM type WHERE id = ?";
+        String typeDeleteSql = "DELETE FROM type WHERE type_id = ?";
         try {
             numberOfRows = jdbcTemplate.update(typeDeleteSql, id);
         } catch (CannotGetJdbcConnectionException e) {
@@ -131,7 +131,7 @@ public class JdbcTypeDao implements TypeDao {
 
     private Type mapRowToType(SqlRowSet rs) {
         Type type = new Type();
-        type.setId(rs.getInt("id"));
+        type.setId(rs.getInt("type_id"));
         type.setName(rs.getString("name"));
         return type;
     }

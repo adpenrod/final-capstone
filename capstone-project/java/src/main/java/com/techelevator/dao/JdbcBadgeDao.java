@@ -23,8 +23,8 @@ public class JdbcBadgeDao implements BadgeDao {
 @Override
     public Badge getBadgeById(int id){
         Badge badge = null;
-        String sql = "SELECT id, name, description" +
-                " FROM badge WHERE id = ?";
+        String sql = "SELECT badge_id, name, description" +
+                " FROM badge WHERE badge_id = ?";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
@@ -39,7 +39,7 @@ public class JdbcBadgeDao implements BadgeDao {
     @Override
     public List<Badge> getBadge() {
         List<Badge> badge = new ArrayList<>();
-        String sql = "SELECT id, name, description" +
+        String sql = "SELECT badge_id, name, description" +
                 " FROM badge ORDER BY name ASC";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -56,7 +56,7 @@ public class JdbcBadgeDao implements BadgeDao {
     public Badge getBadgeByName(String name) {
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Badge badge = null;
-        String sql = "SELECT id, name, description" +
+        String sql = "SELECT badge_id, name, description" +
                 " FROM badge WHERE name = ?";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, name);
@@ -74,7 +74,7 @@ public class JdbcBadgeDao implements BadgeDao {
         String insertBadgeSql = "INSERT INTO badge ( " +
                 " name, description) " +
                 " VALUES ( ?, ?);" +
-                " RETURNING id";
+                " RETURNING badge_id";
 
         try {
             int newBadgeId = jdbcTemplate.queryForObject(insertBadgeSql, int.class, badge.getName(), badge.getDescription());
@@ -89,7 +89,7 @@ public class JdbcBadgeDao implements BadgeDao {
     @Override
     public int deleteBadgeById(int id){
         int numberOfRows = 0;
-        String badgeDeleteSql = "DELETE FROM badge WHERE id = ?";
+        String badgeDeleteSql = "DELETE FROM badge WHERE badge_id = ?";
         try {
             numberOfRows = jdbcTemplate.update(badgeDeleteSql, id);
         } catch (CannotGetJdbcConnectionException e) {
@@ -103,7 +103,7 @@ public class JdbcBadgeDao implements BadgeDao {
     @Override
     public Badge updateBadge(Badge badge) {
         Badge updatedBadge = null;
-        String sql = "UPDATE badge SET name=?, description=? WHERE id=?";
+        String sql = "UPDATE badge SET name=?, description=? WHERE badge_id=?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, badge.getName(), badge.getDescription(), badge.getId());
 
@@ -123,7 +123,7 @@ public class JdbcBadgeDao implements BadgeDao {
 
     private Badge mapRowToBadge(SqlRowSet rs) {
         Badge badge = new Badge();
-        badge.setId(rs.getInt("id"));
+        badge.setId(rs.getInt("badge_id"));
         badge.setName(rs.getString("name"));
         badge.setDescription(rs.getString("description"));
         return badge;

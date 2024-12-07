@@ -2,21 +2,18 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Attraction;
 import org.w3c.dom.Attr;
-
-
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface AttractionDao {
-
-    public List<Attraction> getAttractions();
-    public Attraction getAttractionById(int id);
-    public List<Attraction> getAttractionByName(String name);
-    public List <Attraction> getAttractionByAddress(String address);
-    public List<Attraction> getAttractionByType(String typeName);
-    public Attraction createAttraction(Attraction attraction);
-    public int deleteAttractionById(int id);
-    public Attraction updateAttraction(Attraction attraction);
-    public BigDecimal getLatitude(int id);
-    public BigDecimal getLongitude(int id);
+    List<Attraction> getAttractions();
+    Attraction getAttractionById(int id);
+    List<Attraction> getAttractionByName(String name);
+    List <Attraction> getAttractionByAddress(String address);
+    List<Attraction> getAttractionByType(String typeName);
+    Attraction createAttraction(Attraction attraction);
+    int deleteAttractionById(int id);
+    Attraction updateAttraction(Attraction attraction);
+    BigDecimal getLatitude(int id);
+    BigDecimal getLongitude(int id);
 }

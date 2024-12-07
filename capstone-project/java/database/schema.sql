@@ -4,19 +4,19 @@ DROP TABLE IF EXISTS checkin;
 
 CREATE TABLE IF NOT EXISTS public.checkin
 (
-    id SERIAL,
+    checkin_id SERIAL,
     user_id integer NOT NULL,
     attraction_id integer NOT NULL,
     checkin_time timestamp without time zone,
     notes character varying,
-    PRIMARY KEY (id)
+    PRIMARY KEY (checkin_id)
 );
 
 DROP TABLE IF EXISTS attraction;
 
 CREATE TABLE IF NOT EXISTS public.attraction
 (
-    id SERIAL,
+    attraction_id SERIAL,
     name character varying,
     description character varying,
     hours_of_operation character varying,
@@ -26,28 +26,28 @@ CREATE TABLE IF NOT EXISTS public.attraction
     type_id integer,
     latitude numeric (12,6),
     longitude numeric (12,6),
-    PRIMARY KEY (id)
+    PRIMARY KEY (attraction_id)
 );
 
 DROP TABLE IF EXISTS badge;
 
 CREATE TABLE IF NOT EXISTS public.badge
 (
-    id SERIAL,
+    badge_id SERIAL,
     name character varying NOT NULL,
     description character varying NOT NULL,
     image character varying,
     criteria character varying,
-    PRIMARY KEY (id)
+    PRIMARY KEY (badge_id)
 );
 
 DROP TABLE IF EXISTS type;
 
 CREATE TABLE IF NOT EXISTS public.type
 (
-    id SERIAL,
+    type_id SERIAL,
     name character varying NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (type_id)
 );
 
 DROP TABLE IF EXISTS users;
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS public.user_badge
 
 ALTER TABLE public.user_attraction
     ADD FOREIGN KEY (attraction_id)
-    REFERENCES public.attraction (id)
+    REFERENCES public.attraction (attraction_id)
     NOT VALID;
 
 
@@ -96,7 +96,7 @@ ALTER TABLE public.user_attraction
 
 ALTER TABLE public.user_badge
     ADD FOREIGN KEY (badge_id)
-    REFERENCES public.badge (id)
+    REFERENCES public.badge (badge_id)
     NOT VALID;
 
 
@@ -108,7 +108,7 @@ ALTER TABLE public.user_badge
 
 ALTER TABLE public.attraction
     ADD FOREIGN KEY (type_id)
-    REFERENCES public.type (id)
+    REFERENCES public.type (type_id)
     NOT VALID;
 
 

@@ -98,8 +98,6 @@ public class Attraction {
     public Attraction() {}
 
 
-
-
     public Attraction(int id, String name, String description, String hoursOfOperation, String address, String image, String socialMedia, int typeId, BigDecimal latitude, BigDecimal longitude) {
         this.id = id;
         this.name = name;

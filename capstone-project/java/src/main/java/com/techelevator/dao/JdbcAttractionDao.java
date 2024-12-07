@@ -28,8 +28,8 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public Attraction getAttractionById(int id) {
         Attraction attraction = null;
-        String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id, latitude, longitude" +
-                " FROM attraction WHERE id = ?";
+        String sql = "SELECT attraction_id, name, description, hours_of_operation, address, images, social_media, type_id, latitude, longitude" +
+                " FROM attraction WHERE attraction_id = ?";
               
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
@@ -45,7 +45,7 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public List<Attraction> getAttractions() {
         List<Attraction> attractions = new ArrayList<>();
-        String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id, latitude, longitude " +
+        String sql = "SELECT attraction_id, name, description, hours_of_operation, address, images, social_media, type_id, latitude, longitude " +
                 " FROM attraction ORDER BY name ASC";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -64,7 +64,7 @@ public class JdbcAttractionDao implements AttractionDao{
 
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         List<Attraction> attractions = new ArrayList<>();
-        String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id, latitude, longitude " +
+        String sql = "SELECT attraction_id, name, description, hours_of_operation, address, images, social_media, type_id, latitude, longitude " +
                 " FROM attraction WHERE name ILIKE ?";
         try {
             String wildcardName = "%" + name + "%";
@@ -82,7 +82,7 @@ public class JdbcAttractionDao implements AttractionDao{
     public List<Attraction> getAttractionByAddress(String address) {
         if (address == null) throw new IllegalArgumentException("address cannot be null");
         List<Attraction> attractions = new ArrayList<>();
-        String sql = "SELECT id, name, description, hours_of_operation, address, images, social_media, type_id , latitude, longitude" +
+        String sql = "SELECT attraction_id, name, description, hours_of_operation, address, images, social_media, type_id , latitude, longitude" +
                 " FROM attraction WHERE address ILIKE ?";
         try {
             String wildcardAddress = "%" + address + "%";
@@ -99,12 +99,12 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public List<Attraction> getAttractionByType(String typeName){
         List<Attraction> attractions = new ArrayList<>();
-        String sql = "SELECT id, a.name, description, hours_of_operation, address, images, social_media, type_id , latitude, longitude " +
+        String sql = "SELECT attraction_id, a.name, description, hours_of_operation, address, images, social_media, type_id , latitude, longitude " +
                 " FROM attraction a INNER JOIN type t ON t.id = a.type_id WHERE t.name = ?";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, typeName);
-            if (results.next()) {
+            while (results.next()) {
                 Attraction attraction = mapRowToAttraction(results);
                 attractions.add(attraction);
             }
@@ -117,7 +117,7 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public BigDecimal getLatitude(int id) {
         BigDecimal latitude = null;
-        String sql = "SELECT latitude FROM attraction WHERE id = ?";
+        String sql = "SELECT latitude FROM attraction WHERE attraction_id = ?";
 
         try{
             SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
@@ -135,7 +135,7 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public BigDecimal getLongitude(int id) {
         BigDecimal longitude = null;
-        String sql = "SELECT longitude FROM attraction WHERE id = ? ";
+        String sql = "SELECT longitude FROM attraction WHERE attraction_id = ? ";
 
         try{
             SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
@@ -152,7 +152,7 @@ public class JdbcAttractionDao implements AttractionDao{
     public Attraction updateAttraction(Attraction attraction) {
         Attraction updatedAttraction = null;
         String sql = "UPDATE attraction SET name=?, description=?, hours_of_operation=?, address=?, images=?, social_media=?, type_id=?, latitude=?, longitude=?\n" +
-                "\tWHERE id=?";
+                "\tWHERE attraction_id=?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, attraction.getName(), attraction.getDescription(), attraction.getHoursOfOperation(), attraction.getAddress(),attraction.getImage(),attraction.getSocialMedia(),attraction.getTypeId(),attraction.getLatitude(), attraction.getLongitude(), attraction.getId());
 
@@ -172,7 +172,7 @@ public class JdbcAttractionDao implements AttractionDao{
     @Override
     public int deleteAttractionById(int id){
         int numberOfRows = 0;
-        String badgeDeleteSql = "DELETE FROM attraction WHERE id = ?";
+        String badgeDeleteSql = "DELETE FROM attraction WHERE attraction_id = ?";
         try {
             numberOfRows = jdbcTemplate.update(badgeDeleteSql, id);
         } catch (CannotGetJdbcConnectionException e) {
@@ -190,7 +190,7 @@ public class JdbcAttractionDao implements AttractionDao{
         String insertAttractionSql = "INSERT INTO attraction ( " +
                 " name, description, hours_of_operation, address, images, social_media, type_id, latitude, longitude) " +
                 " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?);" +
-                " RETURNING id";
+                " RETURNING attraction_id";
 
         try {
             int newAttractionId = jdbcTemplate.queryForObject(insertAttractionSql, int.class, attraction.getName(), attraction.getDescription(),
@@ -206,7 +206,7 @@ public class JdbcAttractionDao implements AttractionDao{
 
     private Attraction mapRowToAttraction(SqlRowSet rs) {
         Attraction attraction = new Attraction();
-        attraction.setId(rs.getInt("id"));
+        attraction.setId(rs.getInt("attraction_id"));
         attraction.setName(rs.getString("name"));
         attraction.setDescription(rs.getString("description"));
         attraction.setHoursOfOperation(rs.getString("hours_of_operation"));
