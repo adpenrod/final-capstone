@@ -9,9 +9,6 @@
   <div id="Museums" class="tabcontent">
     <h3>Museums</h3>
     <p>List of museum badges to earn.</p>
-    <ul>
-        <li v-for="badge in museums" :key="badge.id">{{ badge.name }}</li>
-    </ul>
   </div>
   <div id="Restaurants" class="tabcontent">
     <h3>Restaurants</h3>

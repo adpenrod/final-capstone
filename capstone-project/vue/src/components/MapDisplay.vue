@@ -148,7 +148,7 @@ export default {
 
     filterMarkers(typeId) {
       this.selectedGroup = typeId;
-      this.fetchAttractions();
+      this.displayMarkers();
     },
 
     toggleAccordion(index) {
