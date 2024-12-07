@@ -1,7 +1,7 @@
 <template>
   <div class="map-container">
     <div class="dropdown">
-      <select v-on:change="filterMarkers($event.target.value)">
+      <select v-on:change="onCategoryChange($event)">
         <option value="all">All</option>
         <option v-for="type in types" :key="type.type_id" :value="type.type_id">
           {{ type.name }}
@@ -27,6 +27,8 @@
 import axios from 'axios';
 import { Loader } from "@googlemaps/js-api-loader";
 
+let gmarkers1 = [];
+
 export default {
 
   data() {
@@ -42,7 +44,7 @@ export default {
         { type_id: 4, name: 'Parks' },
         { type_id: 5, name: 'Restaurants' }
       ],
-      selectedGroup: "all",
+      selectedGroup: "all"
     };
   },
 
@@ -111,7 +113,7 @@ export default {
 
     createMarker(markerData) {
 
-      return new google.maps.Marker({
+      const marker = new google.maps.Marker({
 
         position: { lat: markerData.latitude, lng: markerData.longitude },
         map: this.map,
@@ -119,24 +121,51 @@ export default {
 
       });
 
+      marker.category = markerData.typeId;
+      gmarkers1.push(marker);
+
+      return marker;
+
     },
 
     displayMarkers() {
 
-      this.markers.forEach(marker => marker.setMap(null));
-      this.markers = [];
+      gmarkers1.forEach(marker => marker.setMap(null));
+      gmarkers1 = [];
+
       this.filteredMarkers.forEach(markerData => {
-        const marker = this.createMarker(markerData);
-        this.markers.push(marker);
+        this.createMarker(markerData);
 
       });
+
+      this.filterMarkers(this.selectedGroup);
     },
 
-    filterMarkers(typeId) {
+    /*filterMarkers(typeId) {
 
       this.selectedGroup = typeId;
       this.displayMarkers();
 
+    },*/
+
+    filterMarkers(category) {
+
+      for (let i = 0; i < gmarkers1.length; i++){
+        const marker = gmarkers1[i];
+
+        if (category === "all" || marker.category === parseInt(category)){
+          marker.setVisible(true);
+        }else{
+          marker.setVisible(false);
+        }
+      }
+
+    },
+
+    onCategoryChange (event){
+      const category = event.target.value;
+      this.selectedGroup = category;
+      this.filterMarkers(category);
     },
 
     toggleAccordion(index) {

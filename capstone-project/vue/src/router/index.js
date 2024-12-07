@@ -75,7 +75,7 @@ const routes = [
     name: "maphome",
     component: MapHomeView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -91,7 +91,7 @@ const routes = [
     name: "mapdirections",
     component: MapDirectionsView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {

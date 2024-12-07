@@ -8,6 +8,13 @@
             </option>
         </select>
 
+        <button
+            v-if="selectedAttraction && !selectedAttraction.checkedOff"
+            v-on:click="checkIn"
+            class="check-in-btn">
+            Check-In
+        </button>
+
         <div ref="map" class="map"></div>
     </div>
 </template>
@@ -24,6 +31,7 @@ export default {
     data() {
         return {
             attractions: [],
+            selectedAttraction: null,
             userLocation: null,
             map: null,
             directionsRenderer: null,
@@ -134,6 +142,17 @@ export default {
             if (this.currentAttractionMarker){
                 this.currentAttractionMarker.setMap(null);
             }
+        },
+
+        CheckIn() {
+            if (this.selectedAttraction) {
+                AttractionsService.checkIn(this.selectedAttraction.id).then(() => {//change this when we have check in service created
+                    this.selectedAttraction.checkedOff = true;
+                    alert(`You checked into ${this.selectedAttraction.name}.`);
+                }).catch((error) => {
+                    console.error("Error during check-in:", error);
+                });
+            }
         }
     }
 
@@ -154,6 +173,12 @@ export default {
 }
 
 select{
+    height: 5vh;
+    margin: 20px;
+    padding: 10px;
+}
+
+button {
     height: 10vh;
     margin: 20px;
     padding: 10px;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const http = axios.create({
-  baseURL: import.meta.env.VITE_REMOTE_API
+  baseURL: import.meta.env.VITE_REMOTE_API,
 });
 
 export default {
@@ -12,6 +12,10 @@ export default {
 
   getBadgeByName(name) {
     return http.get(`/badges/name/${name}`);
+  },
+
+  getBadgeById(id) {
+    return http.get(`/badges/${id}`);
   },
 
   update(badge) {

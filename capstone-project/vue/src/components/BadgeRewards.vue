@@ -1,4 +1,5 @@
 <template>
+
   <div class="tab">
     <button class="tablinks" @click="openVenueType($event, 'Museums')">Museums</button>
     <button class="tablinks" @click="openVenueType($event, 'Restaurants')">Restaurants</button>
@@ -6,26 +7,62 @@
     <button class="tablinks" @click="openVenueType($event, 'Parks')">Parks</button>
     <button class="tablinks" @click="openVenueType($event, 'Stadiums')">Stadiums</button>
   </div>
+
   <div id="Museums" class="tabcontent">
     <h3>Museums</h3>
     <p>List of museum badges to earn.</p>
+    <ul>
+        <li v-for="badge in museums" :key="badge.id">
+            <h4>{{ badge.name }}</h4> 
+            <p>{{ badge.description }}</p>
+        </li>
+    </ul>
   </div>
+
   <div id="Restaurants" class="tabcontent">
     <h3>Restaurants</h3>
     <p>List of restaurant badges to earn.</p>
+    <ul>
+        <li v-for="badge in restaurants" :key="badge.id">
+            <h4>{{ badge.name }}</h4> 
+            <p>{{ badge.description }}</p>
+        </li>
+    </ul>
   </div>
+
   <div id="Bars" class="tabcontent">
     <h3>Bars</h3>
     <p>List of bar badges to earn.</p>
+    <ul>
+        <li v-for="badge in bars" :key="badge.id">
+            <h4>{{ badge.name }}</h4> 
+            <p>{{ badge.description }}</p>
+        </li>
+    </ul>
   </div>
+
   <div id="Parks" class="tabcontent">
     <h3>Parks</h3>
     <p>List of park badges to earn.</p>
+    <ul>
+        <li v-for="badge in parks" :key="badge.id">
+            <h4>{{ badge.name }}</h4> 
+            <p>{{ badge.description }}</p>
+        </li>
+    </ul>
   </div>
+
   <div id="Stadiums" class="tabcontent">
     <h3>Stadiums</h3>
     <p>List of stadium badges to earn.</p>
+    <ul>
+        <li v-for="badge in stadiums" :key="badge.id">
+            <h4>{{ badge.name }}</h4> 
+            <p>{{ badge.description }}</p>
+        </li>
+    </ul>
   </div>
+
 </template>
 
 <script>
@@ -39,15 +76,27 @@ export default {
 
     data() {
         return {
+            badges: [],
            museums: [],
            restaurants: [],
            bars: [],
            parks: [],
-           stadiums: []
+           stadiums: [],
+           categoryMapping:{
+            2: 'Bars',
+            3: 'Stadiums',
+            4: 'Parks',
+            5: 'Museums',
+            6: 'Restaurants'
+           }
         };
     },
 
     computed: {
+
+        museumBadges(){
+            return this.badges.find(badge => badge.id === 5);
+        },
 
     },
 
@@ -89,17 +138,26 @@ export default {
         fetchBadges() {
            
             BadgeService.getBadges().then(response => {
+
                 const badges = response.data;
-                this.museums = badges.filter(badge => badge.category === 'Museum');
+                this.badges = badges;
+
+                this.museums = badges.filter(badge => this.categoryMapping[badge.id] === 'Museums');
+                this.restaurants = badges.filter(badge => this.categoryMapping[badge.id] === 'Restaurants');
+                this.bars = badges.filter(badge => this.categoryMapping[badge.id] === 'Bars');
+                this.parks = badges.filter(badge => this.categoryMapping[badge.id] === 'Parks');
+                this.stadiums = badges.filter(badge => this.categoryMapping[badge.id] === 'Stadiums');
+
+
             }).catch(error => {
                 console.error('Error fetching badges:', error);
-            })
+            });
 
         }
 
     }
 
-}
+};
 
 </script>
 
