@@ -1,30 +1,31 @@
 <template>
-  <div class="map-container">
-    <div class="dropdown">
-      <select v-on:change="onCategoryChange($event)">
-        <option value="all">All</option>
-        <option v-for="type in types" :key="type.type_id" :value="type.type_id">
-          {{ type.name }}
+  <div class="dropdown">
+    <select v-on:change="onCategoryChange($event)">
+      <option value="all">All</option>
+      <option v-for="type in types" :key="type.type_id" :value="type.type_id">
+        {{ type.name }}
 
-        </option>
-      </select>
-    </div>
+      </option>
+    </select>
+  </div>
+  <div class="map-container">
+
 
     <div id="map" ref="map"></div>
-
-    <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
-      <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
-      <div class="accordion-content">
-        <p>{{ marker.description }}</p>
-        <p>Hours: {{ marker.hoursOfOperation }}</p>
-        <p>Address: {{ marker.address }}</p>
-        <p>Social Media: {{ marker.socialMedia }}</p>
-        <img :src="marker.image" alt="Image of attraction">
-      </div>
-    </div>
-
   </div>
-</template>
+<div class="accordion-container">
+  <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
+    <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
+    <div class="accordion-content">
+      <p>{{ marker.description }}</p>
+      <p>Hours: {{ marker.hoursOfOperation }}</p>
+      <p>Address: {{ marker.address }}</p>
+      <p>Social Media: {{ marker.socialMedia }}</p>
+      <img :src="marker.image" alt="Image of attraction">
+    </div>
+  </div>
+
+</div></template>
 
 
 <script>
@@ -59,7 +60,7 @@ export default {
       if (this.selectedGroup === "all") {
         return this.markersData;
       }
-      
+
       return this.markersData.filter(marker => marker.typeId === parseInt(this.selectedGroup));
 
     },
@@ -148,19 +149,19 @@ export default {
 
     filterMarkers(category) {
 
-      for (let i = 0; i < gmarkers1.length; i++){
+      for (let i = 0; i < gmarkers1.length; i++) {
         const marker = gmarkers1[i];
 
-        if (category === "all" || marker.category === parseInt(category)){
+        if (category === "all" || marker.category === parseInt(category)) {
           marker.setVisible(true);
-        }else{
+        } else {
           marker.setVisible(false);
         }
       }
 
     },
 
-    onCategoryChange (event){
+    onCategoryChange(event) {
       const category = event.target.value;
       this.selectedGroup = category;
       this.filterMarkers(category);
@@ -255,40 +256,49 @@ export default {
 <style scoped>
 .map-container {
   display: grid;
+  grid-template-columns: 5fr;
+  grid-template-areas:
+    "notmap map map map notmap"
+  ;
+  width: 100%;
+  height: 50vh;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.accordion-container {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-template-areas:
-    "#map #map .accordion .accordion .accordion"
-    ". . .accordion .accordion .accordion"
+    "map map map map map"
+    "accordion accordion accordion accordion accordion"
   ;
   width: 100%;
   height: 100vh;
+  gap: 10px;
   overflow: hidden;
 }
 
-#map {
-  flex: 2;
-  height: 100vh;
-  width: auto;
+.dropdown {
+  grid-area: sidebar;
+  padding: 10px;
 }
 
-.sidebar {
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px;
-  background-color: #d8dde2e0;
-  height: 100vh;
-  width: 20%;
-  box-sizing: border-box;
+.map {
+  grid-area: map;
+  height: 50vh;
+  width: 100%;
+  position: relative;
 }
 
 .accordion {
-  flex-direction: column;
   background-color: hotpink;
-  margin-bottom: 10px;
+  margin: 10px;
   border-radius: 5px;
-  overflow: hidden;
   border: 1px solid #8dd792;
+  overflow: hidden;
+  position: relative;
 }
 
 summary {
@@ -296,8 +306,6 @@ summary {
   padding: 10px;
   font-weight: bold;
   border-bottom: 2px solid transparent;
-  outline: none;
-  margin: 0;
 }
 
 details[open] summary {

@@ -8,12 +8,10 @@
             </option>
         </select>
 
-        <button
-            v-if="selectedAttraction && !selectedAttraction.checkedOff"
-            v-on:click="checkIn"
-            class="check-in-btn">
-            Check-In
-        </button>
+        <div v-if="selectedAttraction">
+            <button v-on:click="checkIn" class="check-in-btn">Check-In</button>
+        </div>
+
 
         <div ref="map" class="map"></div>
     </div>
@@ -22,6 +20,7 @@
 <script>
 import { Loader } from "@googlemaps/js-api-loader";
 import AttractionsService from "../services/AttractionsService.js";
+import CheckinService from "../services/CheckinService";
 
 
 export default {
@@ -145,8 +144,15 @@ export default {
         },
 
         CheckIn() {
+            
             if (this.selectedAttraction) {
-                AttractionsService.checkIn(this.selectedAttraction.id).then(() => {//change this when we have check in service created
+
+                const checkin = {
+                    user_id: this.userId,
+                    attraction_id: this.selectedAttraction.id
+                };
+
+                CheckinService.createCheckin(checkin).then(() => {
                     this.selectedAttraction.checkedOff = true;
                     alert(`You checked into ${this.selectedAttraction.name}.`);
                 }).catch((error) => {
