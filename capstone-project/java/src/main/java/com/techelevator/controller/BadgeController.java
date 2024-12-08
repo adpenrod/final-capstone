@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.Service.AttractionService;
 import com.techelevator.dao.BadgeDao;
+import com.techelevator.dao.UserBadgeDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Badge;
 import jakarta.validation.Valid;
@@ -18,6 +19,8 @@ import java.util.List;
 @RequestMapping(path = "/badges/")
 public class BadgeController {
     private BadgeDao badgeDao;
+
+    private UserBadgeDao userBadgeDao;
     private AttractionService as;
 
     public BadgeController(BadgeDao badgeDao, AttractionService as) {

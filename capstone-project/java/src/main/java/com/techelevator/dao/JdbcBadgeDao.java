@@ -56,7 +56,7 @@ public class JdbcBadgeDao implements BadgeDao {
     public Badge getBadgeByName(String name) {
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Badge badge = null;
-        //TODO wildcard for name!
+
         String sql = "SELECT badge_id, name, description" +
                 " FROM badge WHERE name = ?";
         try {
