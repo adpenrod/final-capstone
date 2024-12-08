@@ -5,10 +5,13 @@
         <option value="all">All</option>
         <option v-for="type in types" :key="type.type_id" :value="type.type_id">
           {{ type.name }}
+
         </option>
       </select>
     </div>
+
     <div id="map" ref="map"></div>
+
     <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
       <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
       <div class="accordion-content">
@@ -16,9 +19,10 @@
         <p>Hours: {{ marker.hoursOfOperation }}</p>
         <p>Address: {{ marker.address }}</p>
         <p>Social Media: {{ marker.socialMedia }}</p>
-        <img :src="marker.imageUrl" alt="Image of attraction">
+        <img :src="marker.image" alt="Image of attraction">
       </div>
     </div>
+
   </div>
 </template>
 
@@ -66,13 +70,14 @@ export default {
 
     const loader = new Loader({
 
-      apiKey: "AIzaSyBqXUJKJ-biBNEFS4eDEVxPM-elng6ewqw", // Replace with your API key
-      libraries: ["places"], // Include the Places library
+      apiKey: "AIzaSyBqXUJKJ-biBNEFS4eDEVxPM-elng6ewqw", // API key
+      libraries: ["places"],
+
     });
 
     loader.load().then(() => {
       this.map = new google.maps.Map(this.$refs.map, {
-        center: { lat: 39.9526, lng: -75.1652 }, // Philly coordinates
+        center: { lat: 39.9526, lng: -75.1652 }, //Philly
         zoom: 12,
       });
 
@@ -96,7 +101,7 @@ export default {
           hoursOfOperation: attraction.hoursOfOperation,
           address: attraction.address,
           socialMedia: attraction.socialMedia,
-          imageUrl: attraction.imageUrl,
+          image: new URL(`/src/assets/images/${attraction.image}`, import.meta.url).href,
           typeId: attraction.typeId,
           latitude: attraction.latitude,
           longitude: attraction.longitude,
@@ -141,13 +146,6 @@ export default {
       this.filterMarkers(this.selectedGroup);
     },
 
-    /*filterMarkers(typeId) {
-
-      this.selectedGroup = typeId;
-      this.displayMarkers();
-
-    },*/
-
     filterMarkers(category) {
 
       for (let i = 0; i < gmarkers1.length; i++){
@@ -168,7 +166,7 @@ export default {
       this.filterMarkers(category);
     },
 
-    toggleAccordion(index) {
+    /*toggleAccordion(index) {
 
       const accordion = document.getElementById(`accordion-${index}`);
       if (accordion.open) {
@@ -223,7 +221,7 @@ export default {
         accordion.open = false;
       };
 
-    },
+    },*/
 
     addUserLocation() {
 
