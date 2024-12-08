@@ -58,8 +58,6 @@ CREATE TABLE IF NOT EXISTS public.users
    password_hash varchar(200) NOT NULL,
    role varchar(50) NOT NULL,
    user_id SERIAL,
-   email varchar(50) NOT NULL,
-   birthday date,
    CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
