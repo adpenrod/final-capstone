@@ -20,9 +20,9 @@ CREATE TABLE type (
 DROP TABLE IF EXISTS attraction CASCADE;
 CREATE TABLE attraction (
     attraction_id SERIAL PRIMARY KEY,
-    name CHARACTER VARYING(100) NOT NULL,
+    name CHARACTER VARYING(200) NOT NULL,
     description CHARACTER VARYING(255),
-    hours_of_operation CHARACTER VARYING(100),
+    hours_of_operation CHARACTER VARYING(200),
     address CHARACTER VARYING(255),
     images CHARACTER VARYING(255),
     social_media CHARACTER VARYING(255),
