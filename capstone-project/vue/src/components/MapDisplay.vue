@@ -168,63 +168,6 @@ export default {
       this.filterMarkers(category);
     },
 
-    /*toggleAccordion(index) {
-
-      const accordion = document.getElementById(`accordion-${index}`);
-      if (accordion.open) {
-        this.shrinkAccordion(accordion);
-      } else {
-        this.expandAccordion(accordion);
-      }
-    },
-
-    expandAccordion(accordion) {
-
-      const content = accordion.querySelector('.accordion-content');
-      const summary = accordion.querySelector('summary');
-      const startHeight = 0;
-      const endHeight = content.scrollHeight + summary.offsetHeight;
-
-      accordion.style.maxHeight = `${startHeight}px`;
-      accordion.open = true;
-
-      const animation = accordion.animate({
-        maxHeight: [startHeight, endHeight],
-      }, {
-        duration: 400,
-        easing: 'ease-out',
-      });
-
-      animation.onfinish = () => {
-
-        accordion.style.maxHeight = '';
-      };
-
-    },
-
-    shrinkAccordion(accordion) {
-
-      const content = accordion.querySelector('.accordion-content');
-      const summary = accordion.querySelector('summary');
-      const startHeight = content.scrollHeight + summary.offsetHeight;
-      const endHeight = 0;
-
-      accordion.style.overflow = 'hidden';
-
-      const animation = accordion.animate({
-        maxHeight: [startHeight, endHeight],
-      }, {
-        duration: 400,
-        easing: 'ease-out',
-      });
-
-      animation.onfinish = () => {
-        accordion.style.maxHeight = '';
-        accordion.open = false;
-      };
-
-    },*/
-
     addUserLocation() {
 
       navigator.geolocation.getCurrentPosition((position) => {
