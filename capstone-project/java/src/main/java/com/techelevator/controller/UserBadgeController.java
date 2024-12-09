@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.Service.AttractionService;
 import com.techelevator.dao.UserBadgeDao;
 import com.techelevator.exception.DaoException;
+import jakarta.validation.Valid;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class UserBadgeController {
     }
 
     @RequestMapping(path = "visits/{userId}/{attractionType}", method= RequestMethod.GET)
-    public ResponseEntity<String> hasVisitedAttractionTypeFiveTimes(int userId, String attractionType){
+    public ResponseEntity<String> hasVisitedAttractionTypeFiveTimes(@PathVariable int userId, @PathVariable String attractionType){
 
         try{
             boolean hasVisited = userbadgedao.hasVistedAttractionTypeFiveTimes(userId, attractionType);
@@ -36,7 +37,7 @@ public class UserBadgeController {
 
     }
 
-    @RequestMapping(path = "id/{name}")
+    @RequestMapping(path = "id/{name}", method= RequestMethod.GET)
     public ResponseEntity<String> getBadgeId(@PathVariable String name) {
 
 
@@ -56,8 +57,8 @@ public class UserBadgeController {
 
 
 
-    @RequestMapping(path = "award")
-    public ResponseEntity<String> awardBadge(@RequestParam int userId, @RequestParam String attractionType, @RequestParam String badgeName){
+    @RequestMapping(path = "award", method=RequestMethod.POST)
+    public ResponseEntity<String> awardBadge(@Valid @RequestBody int userId, @RequestBody String attractionType, @RequestBody String badgeName){
         try{
             userbadgedao.checkAndAwardBadge(userId,attractionType,badgeName);
             return ResponseEntity.ok("Badge awarded successfully.");
