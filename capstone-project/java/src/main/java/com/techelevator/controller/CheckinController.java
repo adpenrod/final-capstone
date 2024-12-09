@@ -23,7 +23,7 @@ public class CheckinController {
         this.checkinDao = checkinDao;
         this.as = as;
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "all", method = RequestMethod.GET)
     public List<Checkin> allUserCheckins() {
         return checkinDao.getAllCheckins();

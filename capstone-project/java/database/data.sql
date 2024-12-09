@@ -31,7 +31,7 @@ VALUES
  	'101 S 3rd Street, Philadelphia, PA 19106', 'RevolutionMuseumWalkCity.jpg', 'instagram.com/amrevmuseum', 2, 39.9489, -75.1467),
 ('Philadelphia Museum of Art', 'One of the largest art museums in the country, featuring diverse collections and the famous ''Rocky Steps''',
  	'Open Wednesday and Friday from 10:00 AM to 8:45 PM and Thursday, Saturday, and Sunday from 10:00 AM to 5:00 PM. Closed Monday and Tuesday.',
- 	'2600 Benjamin Franklin Parkway, Philadelphia, PA 19130', 'ArtMuseumPhlCityWalk.jpg', 'instagram.com/philamuseum', 2, 39.9656, -75.1800),
+ 	'2600 Benjamin Franklin Parkway, Philadelphia, PA 19130', 'ArtMuseumPhiCityWalk.jpg', 'instagram.com/philamuseum', 2, 39.9656, -75.1800),
 
 ('Citizens Bank Park', 'Home to the Philadelphia Phillies, offering tours and game-day experiences.', 'Open during Philly games or other events', '1 Citizens Bank Way, Philadelphia, PA 19148', 'CBPWALKCITY.jpg', 'instagram.com/citizensbankpark', 3, 39.9060613, -75.1690701),
 ('Lincoln Financial Field', 'Home of the Philadelphia Eagles, known for its enthusiastic fan base.', 'Open during Eagle games or other events', 'One Lincoln Financial Field Way, Philadelphia, PA 19148', 'LincolnField.jpg', 'none', 3, 39.9013736, -75.1700964),
