@@ -1,6 +1,11 @@
 <template>
   <div id="capstone-app">
 
+    <!----<div id="nav">
+      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      <router-link v-bind:to="{ name: 'login' }" v-else>Login</router-link>
+    </div>-->
+
     <div class="tab">
       <button class="tablinks" :class="{active: activeTab === 'Home'}" v-on:click="setActiveTab('Home')">Home</button>
       <button class="tablinks" :class="{active: activeTab === 'Logout'}" v-on:click="setActiveTab('Logout')" v-if="$store.state.token != ''">Logout</button>
@@ -13,7 +18,7 @@
     <div class="tabcontent">
       <component :is="currentTabComponent"></component>
     </div>
-    <router-view />
+    
   </div>
 </template>
 
