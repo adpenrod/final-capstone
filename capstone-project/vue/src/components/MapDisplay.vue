@@ -8,24 +8,25 @@
       </option>
     </select>
   </div>
+
   <div class="map-container">
-
-
     <div id="map" ref="map"></div>
   </div>
-<div class="accordion-container">
-  <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
-    <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
-    <div class="accordion-content">
-      <p>{{ marker.description }}</p>
-      <p>Hours: {{ marker.hoursOfOperation }}</p>
-      <p>Address: {{ marker.address }}</p>
-      <p>Social Media: {{ marker.socialMedia }}</p>
-      <img :src="marker.image" alt="Image of attraction">
+
+  <div class="accordion-container">
+    <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
+      <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
+      <div class="accordion-content">
+        <p>{{ marker.description }}</p>
+        <p>Hours: {{ marker.hoursOfOperation }}</p>
+        <p>Address: {{ marker.address }}</p>
+        <p>Social Media: {{ marker.socialMedia }}</p>
+        <img :src="marker.image" alt="Image of attraction">
+      </div>
     </div>
   </div>
-
-</div></template>
+  
+</template>
 
 
 <script>
