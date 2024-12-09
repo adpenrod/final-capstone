@@ -2,26 +2,62 @@
   <div id="capstone-app">
 
     <div class="tab">
-      <router-link class="tablinks" v-bind:class="{active: $route.name === 'home'}" v-bind:to="{ name: 'home' }">Home</router-link>
-      <router-link class="tablinks" v-bind:class="{active: $route.name === 'logout'}" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-      <router-link class="tablinks" v-bind:class="{active: $route.name === 'login'}" v-bind:to="{ name: 'login' }" v-else >Login</router-link>
-      <router-link class="tablinks" v-bind:class="{active: $route.name === 'maphome'}" v-bind:to="{ name: 'maphome' }">Map</router-link>
-      <router-link class="tablinks" v-bind:class="{active: $route.name === 'badge'}" v-bind:to="{ name: 'badge' }">Rewards</router-link>
-      <router-link class="tablinks" v-bind:class="{active: $route.name === 'myhistory'}" v-bind:to="{ name: 'myhistory' }">My History</router-link>
+      <button class="tablinks" :class="{active: activeTab === 'Home'}" v-on:click="setActiveTab('Home')">Home</button>
+      <button class="tablinks" :class="{active: activeTab === 'Logout'}" v-on:click="setActiveTab('Logout')" v-if="$store.state.token != ''">Logout</button>
+      <button class="tablinks" :class="{active: activeTab === 'Login'}" v-on:click="setActiveTab('Login')" v-else >Login</button>
+      <button class="tablinks" :class="{active: activeTab === 'Map'}" v-on:click="setActiveTab('Map')">Map</button>
+      <button class="tablinks" :class="{active: activeTab === 'Rewards'}" v-on:click="setActiveTab('Rewards')">Rewards</button>
+      <button class="tablinks" :class="{active: activeTab === 'History'}" v-on:click="setActiveTab('History')">My History</button>
+    </div>
+
+    <div class="tabcontent">
+      <component :is="currentTabComponent"></component>
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
+import HomeView from './views/HomeView.vue';
+import LoginView from './views/LoginView.vue';
+import MapHomeView from './views/MapHomeView.vue';
+import BadgeView from './views/BadgeView.vue';
+import MyHistoryView from './views/MyHistoryView.vue';
+
 
 export default {
+
+  data(){
+    return {
+      activeTab: 'Home',
+    };
+  },
+
+  computed: {
+    currentTabComponent(){
+
+      const tabComponents = {
+        Home: HomeView,
+        Login: LoginView,
+        Map: MapHomeView,
+        Rewards: BadgeView,
+        History: MyHistoryView
+      };
+      return tabComponents[this.activeTab];
+    }
+  },
+
+  methods: {
+    setActiveTab(tabName) {
+      this.activeTab = tabName;
+    },
+  },
 
 
  
 
 
-}
+};
 
 
 </script>
@@ -36,7 +72,7 @@ export default {
   justify-content: center;
 }
 
-.tab button{
+.tab .tablinks{
   background-color: #f1f1f1;
   border: none;
   outline: none;
@@ -46,20 +82,35 @@ export default {
   color: #333333;
 }
 
-.tab button:hover{
+.tab .tablinks:hover{
   background-color: #dddddd;
 }
 
-.tab .tablinks{
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: transparent;
-  cursor: pointer;
+.tab .tablinks.active {
+  background-color: #cccccc;
+  color: #000000;
+  font-weight: bold;
 }
 
-.tab .tablinks:hover{
-  background-color: azure;
-  color:#f1f1f1
+.tabcontent{
+  padding: 16px;
+  border: 1px solid #cccccc;
+  border-top: none;
+  background-color: #ffffff;
+  color: #333333;
 }
+
+/*@media (max-width: 768px){
+  .tab {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tab button{
+    float: none;
+    width: 100%;
+    text-align: center;
+  }
+}*/
 
 </style>
