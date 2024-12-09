@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.Service.AttractionService;
 import com.techelevator.dao.UserBadgeDao;
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.UserBadgeDto;
 import jakarta.validation.Valid;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.http.HttpStatus;
@@ -57,11 +58,28 @@ public class UserBadgeController {
 
 
 
+//    @RequestMapping(path = "award", method=RequestMethod.POST)
+//    public ResponseEntity<String> awardBadge(@Valid @RequestBody int userId, String attractionType, String badgeName){
+//        try{
+//            userbadgedao.checkAndAwardBadge(userId,attractionType,badgeName);
+//            return ResponseEntity.ok("Badge awarded successfully.");
+//        } catch (DaoException e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) .body("Error awarding badge: " + e.getMessage());
+//        }
+//    }
+
     @RequestMapping(path = "award", method=RequestMethod.POST)
-    public ResponseEntity<String> awardBadge(@Valid @RequestBody int userId, @RequestBody String attractionType, @RequestBody String badgeName){
+    public ResponseEntity<String> awardBadge(@Valid @RequestBody UserBadgeDto request){
         try{
-            userbadgedao.checkAndAwardBadge(userId,attractionType,badgeName);
-            return ResponseEntity.ok("Badge awarded successfully.");
+            boolean hasVisitedEnough = userbadgedao.hasVistedAttractionTypeFiveTimes(request.getUserId(), request.getAttractionType());
+
+            if(!hasVisitedEnough){
+               return ResponseEntity.status(HttpStatus.BAD_REQUEST) .body("You have not visited enough of attractions of type " + request.getAttractionType() + " to get this badge");
+            } else{
+                userbadgedao.checkAndAwardBadge(request.getUserId(), request.getAttractionType(), request.getBadgeName());
+                return ResponseEntity.ok("Badge awarded successfully.");
+            }
+
         } catch (DaoException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) .body("Error awarding badge: " + e.getMessage());
         }

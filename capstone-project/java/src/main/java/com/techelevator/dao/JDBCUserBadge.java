@@ -24,7 +24,7 @@ public class JDBCUserBadge implements UserBadgeDao{
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId, attractionType);
             if (rowSet.next()) {
-                return rowSet.getInt(1) >= 5;
+                return rowSet.getInt(1) == 5;
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -61,6 +61,8 @@ public class JDBCUserBadge implements UserBadgeDao{
         }
 
     }
+
+
 
     @Override
     public void checkAndAwardBadge(int userId, String attractionType, String badgeName) {
