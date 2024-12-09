@@ -9,7 +9,7 @@
         </select>
 
         <div v-if="selectedAttraction">
-            <button v-on:click="checkIn" class="check-in-btn">Check-In</button>
+            <button onclick="CheckIn()" class="check-in-btn">Check-In</button>
         </div>
 
 

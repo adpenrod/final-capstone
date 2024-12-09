@@ -14,6 +14,10 @@ export default {
     return http.get(`/checkins/${id}`);
   },
 
+  getCheckinByUserId(id) {
+    return http.get(`/checkins/user/${id}`)
+  },
+
   createCheckin(checkin) {
     return http.post('/checkins/', checkin);
   },
