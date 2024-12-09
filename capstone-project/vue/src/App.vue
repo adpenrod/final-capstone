@@ -1,15 +1,15 @@
 <template>
   <div id="capstone-app">
 
-    <!----<div id="nav">
+    <div id="nav">
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
       <router-link v-bind:to="{ name: 'login' }" v-else>Login</router-link>
-    </div>-->
+    </div>
 
     <div class="tab">
       <button class="tablinks" :class="{active: activeTab === 'Home'}" v-on:click="setActiveTab('Home')">Home</button>
-      <button class="tablinks" :class="{active: activeTab === 'Logout'}" v-on:click="setActiveTab('Logout')" v-if="$store.state.token != ''">Logout</button>
-      <button class="tablinks" :class="{active: activeTab === 'Login'}" v-on:click="setActiveTab('Login')" v-else >Login</button>
+      <button class="tablinks" :class="{active: activeTab === 'Logout'}" v-if="$store.state.token != ''" v-on:click="setActiveTab('Logout')">Logout</button>
+      <button class="tablinks" :class="{active: activeTab === 'Login'}" v-else v-on:click="setActiveTab('Login')">Login</button>
       <button class="tablinks" :class="{active: activeTab === 'Map'}" v-on:click="setActiveTab('Map')">Map</button>
       <button class="tablinks" :class="{active: activeTab === 'Rewards'}" v-on:click="setActiveTab('Rewards')">Rewards</button>
       <button class="tablinks" :class="{active: activeTab === 'History'}" v-on:click="setActiveTab('History')">My History</button>

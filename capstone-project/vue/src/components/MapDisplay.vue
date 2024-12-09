@@ -15,7 +15,7 @@
 
   <div class="accordion-container">
     <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
-      <summary v-on:click="toggleAccordion(index)">{{ marker.name }}</summary>
+      <summary v-on:click="navigateToDirections(marker)">{{ marker.name }}</summary>
       <div class="accordion-content">
         <p>{{ marker.description }}</p>
         <p>Hours: {{ marker.hoursOfOperation }}</p>
@@ -249,6 +249,15 @@ export default {
       },
       );
     },
+
+    navigateToDirections(marker) {
+
+      this.$router.push({
+        name: 'mapdirections',
+        query: { attractionId: marker.id}
+        
+      });
+    }
   },
 };
 
