@@ -48,8 +48,8 @@ VALUES
 ('Bastia', 'Honored as Best New Restaurant in 2024, it offers Mediterranean cuisine inspired by Corsica and Sardinia.', 'Wed-Thurs 5-10PM, Sat 10AM-2PM 5-10PM, Sun 10AM-2PM 5-9PM, Mon-Tues 5-9PM','1401 E Susquehanna Ave, Philadelphia, PA 19125','BastiaWalkCity.jpg', 'instagram.com/bastia_fishtown', 5, 39.9752503, -75.1263785),
 ('Rex at the Royal', 'Under Chef Angie Brown, this restaurant revitalizes the Southern dining scene with standout dishes.', 'Tues-Thurs 4-10PM, Friday 4-11PM, Sat 11AM-11PM, Sun 11AM-9PM', '1524 South St, Philadelphia, PA 19146','RexAtTheRoyalWalkCity.jpg','instagram.com/rexphl', 5, 39.9437809, -75.1681729),
 ('Provenance', 'Named Best Tasting Menu Experience, featuring over 20 courses blending French and Korean flavors.','Weds-Fri 5:30-10PM, Sat 5-10PM', '408 S 2nd St, Philadelphia, PA 19147', 'ProvenanceCityWalk.png', 'instagram.com/provenancephl', 5, 39.9428742, -75.1456449),
-('Little Nonna''s', 'A cozy Italian eatery known for its classic dishes and charming outdoor seating.','Everyday 5-10PM', '1234 Locust St, Philadelphia, PA 19107', 'LittleNonnaWalkCity.jpg', 'instagram.com/littlenonnas', 5, 39.9477967, -75.1618964);
-
+('Little Nonna''s', 'A cozy Italian eatery known for its classic dishes and charming outdoor seating.','5-10PM Daily', '1234 Locust St, Philadelphia, PA 19107', 'LittleNonnaWalkCity.jpg', 'instagram.com/littlenonnas', 5, 39.9477967, -75.1618964),
+('Parc', 'Traditional bistro fare is served in a bustling setting that reminds of belle epoque Paris.', 'Monday-Friday 8AM-10PM, Saturday 9:30AM-11PM, Sunday 9:30AM-10PM', '227 S 18th St, Philadelphia, PA 19103', 'ParcPhilly.jpg', 'instagram.com/parcrittenhouse', 5, 39.9491, -75.1707);
 
 INSERT INTO badge (name, description) VALUES ('Defender of The Land', 'For those who have visited every location!'),
 ('Bar Hopper', 'For those who have visited every bar!'),

@@ -30,7 +30,7 @@ public class UserBadgeController {
             if(hasVisited) {
                 return ResponseEntity.ok("User has visited the attraction 5 times.");
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND) .body("User has not visited the attraction 5 times.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User has not visited the attraction 5 times.");
             }
         } catch(DaoException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) .body("Error checking visit: " + e.getMessage());
@@ -39,7 +39,7 @@ public class UserBadgeController {
     }
 
     @RequestMapping(path = "id/{name}", method= RequestMethod.GET)
-    public ResponseEntity<String> getBadgeId(@PathVariable String name) {
+    public ResponseEntity<String> getBadgeIdByName(@PathVariable String name) {
 
 
         try {
