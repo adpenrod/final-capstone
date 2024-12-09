@@ -1,3 +1,160 @@
-body{
-    background-color: hotpink;
-}
+
+
+body, h1, h2, h3, p, div, img, ul, li {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Georgia', serif; 
+    background-color: #F9F7DF; 
+    color: #6E3F13; 
+    line-height: 1.8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Layout Structure */
+  #capstone-app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Top Navigation */
+  #nav {
+    background-color: #6E3F13;
+    color: #F9F7DF; 
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px solid #EB473D; 
+  }
+  
+  #nav a {
+    margin: 0 15px;
+    font-weight: bold;
+    color: #F9F7DF;
+    text-decoration: none;
+  }
+  
+  #nav a:hover {
+    color: #F7CD75;
+    text-decoration: underline;
+  }
+  
+  /* Main Content Area */
+  main {
+    flex: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #FFFFFF; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #6E3F13;
+    color: #F9F7DF;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    border-top: 3px solid #EB473D;
+  }
+  
+  /* Typography */
+  h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    color: #EB473D; 
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #6E3F13;
+  }
+  
+  p {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  /* Buttons */
+  .button {
+    background-color: #F7CD75; 
+    color: #6E3F13;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+  }
+  
+  .button:hover {
+    background-color: #EB473D; 
+    color: #F9F7DF; 
+  }
+  
+  /* Containers */
+  .map-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    height: 50vh;
+    gap: 10px;
+  }
+  
+  .accordion-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px;
+  }
+  
+  .accordion {
+    background-color: #F9F7DF; 
+    border: 1px solid #F7CD75; 
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  summary {
+    background-color: #F7CD75; 
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  summary:hover {
+    background-color: #EB473D;
+  }
+  
+  details[open] summary {
+    border-bottom: 2px solid #6E3F13;
+  }
+  
+  .accordion-content {
+    padding: 10px;
+    border-top: 1px solid #F7CD75;
+  }
+  
+  /* Images */
+  img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  
+  
+  
+  
+  
