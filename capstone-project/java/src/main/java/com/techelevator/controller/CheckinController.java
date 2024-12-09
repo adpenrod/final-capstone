@@ -60,6 +60,16 @@ public class CheckinController {
             return checkin;
         }
     }
+
+    @RequestMapping(path = "user/{id}", method = RequestMethod.GET)
+    public List<Checkin> getCheckinByUserId(@PathVariable int id) {
+        List<Checkin> checkin = checkinDao.getCheckinsByUserId(id);
+        if (checkin == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "You haven't been anywhere yet! Get exploring!");
+        } else {
+            return checkin;
+        }
+    }
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Checkin createCheckin(@Valid @RequestBody Checkin newCheckin) {

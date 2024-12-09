@@ -72,8 +72,9 @@ public class UserBadgeController {
     public ResponseEntity<String> awardBadge(@Valid @RequestBody UserBadgeDto request){
         try{
             boolean hasVisitedEnough = userbadgedao.hasVistedAttractionTypeFiveTimes(request.getUserId(), request.getAttractionType());
+            boolean hasVisitedEverything = userbadgedao.hasVisitedEveryAttraction(request.getUserId());
 
-            if(!hasVisitedEnough){
+            if(!hasVisitedEnough && !hasVisitedEverything){
                return ResponseEntity.status(HttpStatus.BAD_REQUEST) .body("You have not visited enough of attractions of type " + request.getAttractionType() + " to get this badge");
             } else{
                 userbadgedao.checkAndAwardBadge(request.getUserId(), request.getAttractionType(), request.getBadgeName());
