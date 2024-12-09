@@ -5,7 +5,6 @@
 
     <!--<input type="number" name="iLat" id="">-->
 
-    <AttractionMap :latitude="(39.9526)" :longitude="(-75.1652)"></AttractionMap>
 
 
 
