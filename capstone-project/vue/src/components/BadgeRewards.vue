@@ -160,7 +160,7 @@ export default {
 };
 
 </script>
-
+<!-- 
 <style scoped>
 
 .tab {
@@ -194,3 +194,4 @@ export default {
 }
 
 </style>
+-->

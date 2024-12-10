@@ -213,7 +213,7 @@ export default {
   grid-template-areas:
     "notmap map map map notmap"
   ;
-  width: 100%;
+  width: 99%;
   height: 50vh;
   gap: 10px;
   overflow: hidden;
@@ -228,10 +228,17 @@ export default {
     "accordion accordion accordion accordion accordion"
   ;
   width: 100%;
-  height: 100vh;
+  height: 680vh;
   gap: 10px;
   overflow: hidden;
 }
+/* ugly, dont do it
+.accordion-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}*/
+
 
 .dropdown {
   grid-area: sidebar;
@@ -245,6 +252,7 @@ export default {
   position: relative;
 }
 
+/*
 .accordion {
   background-color: hotpink;
   margin: 10px;
@@ -252,19 +260,41 @@ export default {
   border: 1px solid #8dd792;
   overflow: hidden;
   position: relative;
+} */
+
+.accordion {
+  background-color: #f9f7df;
+  border-radius: 5px;
+  border: 1px solid #f7cd75;
+  padding: 10px;
+  overflow: hidden;
+  position: relative;
+  margin: 10px;
 }
 
-summary {
+/*summary {
   background: #8dd792;
   padding: 10px;
   font-weight: bold;
   border-bottom: 2px solid transparent;
+} */
+
+summary {
+  background-color: #f7cd75;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
 }
+
+/*details[open] summary {
+  border-bottom-color: #000;
+} */
 
 details[open] summary {
-  border-bottom-color: #000;
+  border-bottom: 2px solid #6e3f13;
 }
 
+/*
 .content {
   padding: 10px;
   border-top: 2px solid #8dd792;
@@ -279,4 +309,5 @@ img {
   max-width: 100%;
   margin-top: 10px;
 }
+*/
 </style>

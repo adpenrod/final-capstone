@@ -167,17 +167,23 @@ export default {
 </script>
 
 <style scoped>
+
+/* previous: width: 100%;
+    height: 100%;
+    display: flex; changing display to grid. grid-template-columns: 1fr height: 50vh */
 .map-container {
     width: 100%;
-    height: 100%;
-    display: flex;
+    height: 50vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
 }
 
 .map {
     width: 100%;
     height: 500px;
 }
-
+/*
 select{
     height: 5vh;
     margin: 20px;
@@ -188,6 +194,6 @@ button {
     height: 10vh;
     margin: 20px;
     padding: 10px;
-}
+}*/
 </style>
 

@@ -88,7 +88,7 @@ body, h1, h2, h3, p, div, img, ul, li {
   }
   
   /* Buttons */
-  .button {
+  button {
     background-color: #F7CD75; 
     color: #6E3F13;
     padding: 10px 20px;
@@ -96,13 +96,65 @@ body, h1, h2, h3, p, div, img, ul, li {
     border-radius: 5px;
     cursor: pointer;
     font-family: 'Georgia', serif;
+    font-size: 1rem;
   }
   
-  .button:hover {
+  button:hover {
     background-color: #EB473D; 
     color: #F9F7DF; 
   }
+
+  /* Forms */
+
+  .form-input-group{
+    margin-bottom: 1rem;
+  }
+
+  label {
+    margin-right: 0.5rem;
+    font-weight: bold;
+  }
+
+  input {
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    width: 20%
+
+  }
   
+ /* Tabs */
+ 
+ .tab{
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #cccccc;
+  background-color: #f1f1f1f1;
+ }
+
+ .tab .tablinks{
+  padding: 14px 16px;
+  font-size: 16px;
+  background-color: inherit;
+  cursor: pointer;
+  border: none;
+ }
+
+ .tab .tablinks.active{
+  background-color: #cccccc;
+  color: #000000;
+  font-weight: bold;
+ }
+
+ .tabcontent{
+  padding: 16px;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+
+ }
+
+
   /* Containers */
   .map-container {
     display: grid;
