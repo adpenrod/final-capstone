@@ -17,11 +17,11 @@
     <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
       <summary v-on:click="navigateToDirections(marker)">{{ marker.name }}</summary>
       <div class="accordion-content">
+        <img :src="marker.image" alt="Image of attraction">
         <p>{{ marker.description }}</p>
         <p>Hours: {{ marker.hoursOfOperation }}</p>
         <p>Address: {{ marker.address }}</p>
         <p>Social Media: {{ marker.socialMedia }}</p>
-        <img :src="marker.image" alt="Image of attraction">
       </div>
     </div>
   </div>
@@ -197,7 +197,7 @@ export default {
 
       this.$router.push({
         name: 'mapdirections',
-        query: { attractionId: marker.id}
+        params: { attractionId: marker.id}
         
       });
     }
@@ -228,8 +228,8 @@ export default {
     "accordion accordion accordion accordion accordion"
   ;
   width: 100%;
-  height: 680vh;
-  gap: 10px;
+  align-content: start;
+  gap: 10px 10px;
   overflow: hidden;
 }
 /* ugly, dont do it
@@ -270,6 +270,7 @@ export default {
   overflow: hidden;
   position: relative;
   margin: 10px;
+  height: max-content;
 }
 
 /*summary {

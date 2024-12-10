@@ -183,17 +183,19 @@ export default {
     width: 100%;
     height: 500px;
 }
-/*
+
 select{
     height: 5vh;
-    margin: 20px;
+    width: 20%;
+    margin: 10px;
     padding: 10px;
 }
 
 button {
-    height: 10vh;
-    margin: 20px;
+    height: 5vh;
+    width: 20%;
+    margin: 10px;
     padding: 10px;
-}*/
+}
 </style>
 
