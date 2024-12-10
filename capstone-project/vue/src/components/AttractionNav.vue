@@ -2,14 +2,14 @@
     <div class="map-container">
         <h2>Directions to Location</h2>
 
-<!--<select v-model="selectedAttraction" v-on:change="displayDirections">
+<!---<select v-model="selectedAttraction" v-on:change="displayDirections">
             <option v-for="attraction in attractions" :key="attraction.type_id" :value="attraction">
                 {{ attraction.name }}
             </option>
         </select>-->
 
-        <div v-if="selectedAttraction">
-            <button onclick="CheckIn()" class="check-in-btn">Check-In</button>
+        <div v-if="destinationAttraction">
+            <button @click="CheckIn" class="check-in-btn">Check-In</button>
         </div>
 
 
@@ -42,13 +42,7 @@ export default {
 
         destinationAttraction(){
 
-            AttractionsService.listAttractions().then((response) => {
-                this.attractions = response.data.filter(a => a.id == this.$route.params.aId);
-            }).catch((error) => {
-                console.error("Error fetching attractions:", error);
-            });
-
-            return this.attractions[0];
+           return this.attractions.find(a => a.id == this.$route.params.aId);
 
         }
 
@@ -86,6 +80,9 @@ export default {
         fetchAttractions(){
             AttractionsService.listAttractions().then((response) => {
                 this.attractions = response.data;
+                if (this.destinationAttraction){
+                    this.displayDirections();
+                }
             }).catch((error) => {
                 console.error("Error fetching attractions:", error);
             });
@@ -120,11 +117,6 @@ export default {
         displayDirections(){
 
             if (!this.destinationAttraction){
-                
-                if (this.currentAttractionMarker) {
-                    this.currentAttractionMarker.setMap(null);
-                    this.currentAttractionMarker = null;
-                }
 
                 if (this.directionsRenderer) {
                     this.directionsRenderer.setDirections({routes: [] });
@@ -159,13 +151,14 @@ export default {
             
             if (this.destinationAttraction) {
 
+                const userId = this.$store.state.user.id;
+
                 const checkin = {
-                    user_id: this.userId,
-                    attraction_id: this.destinationAttraction.id
+                    userId: userId,
+                    attractionId: this.destinationAttraction.id
                 };
 
                 CheckinService.createCheckin(checkin).then(() => {
-                    this.destinationAttraction.checkedOff = true;
                     alert(`You checked into ${this.destinationAttraction.name}.`);
                 }).catch((error) => {
                     console.error("Error during check-in:", error);

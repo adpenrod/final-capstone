@@ -3,16 +3,16 @@
       <h1>My History</h1>
       <p>You must be authenticated to see this</p>
     </div>
-    <BadgeHistory/>
+    <MyHistory/>
   </template>
   
   <script>
-  import BadgeHistory from "../components/BadgeHistory.vue";
+  import MyHistory from "../components/MyHistory.vue";
 
   export default {
 
     components: {
-      BadgeHistory
+      MyHistory
     }
 
   };

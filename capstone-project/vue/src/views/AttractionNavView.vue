@@ -1,5 +1,9 @@
 <template>
-    <h1>test</h1>
+    <h1>Map Directions</h1>
+    <div id="return-nav">
+        <router-link v-bind:to="{ name: 'maphome' }">Return to Map</router-link>
+
+    </div>
 
     <attraction-nav></attraction-nav>
 </template>

@@ -17,7 +17,7 @@
     <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
       <summary v-on:click="navigateToDirections(marker)">{{ marker.name }}</summary>
       <div class="accordion-content">
-        <img :src="marker.image" alt="Image of attraction">
+        <img :src="marker.image" alt="Image of attraction"/>
         <p>{{ marker.description }}</p>
         <p>Hours: {{ marker.hoursOfOperation }}</p>
         <p>Address: {{ marker.address }}</p>
@@ -196,8 +196,8 @@ export default {
     navigateToDirections(marker) {
 
       this.$router.push({
-        name: 'mapdirections',
-        params: { attractionId: marker.id}
+        name: 'attnav',
+        params: { aId: marker.id}
         
       });
     }
