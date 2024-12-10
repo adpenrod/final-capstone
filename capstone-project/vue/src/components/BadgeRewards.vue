@@ -1,12 +1,12 @@
 <template>
 
-  <div class="tab">
+  <!---<div class="tab">
     <button class="tablinks" @click="openVenueType($event, 'Museums')">Museums</button>
     <button class="tablinks" @click="openVenueType($event, 'Restaurants')">Restaurants</button>
     <button class="tablinks" @click="openVenueType($event, 'Bars')">Bars</button>
     <button class="tablinks" @click="openVenueType($event, 'Parks')">Parks</button>
     <button class="tablinks" @click="openVenueType($event, 'Stadiums')">Stadiums</button>
-  </div>
+  </div>-->
 
   <div id="Museums" class="tabcontent">
     <h3>Museums</h3>
@@ -15,6 +15,9 @@
         <li v-for="badge in museums" :key="badge.id">
             <h4>{{ badge.name }}</h4> 
             <p>{{ badge.description }}</p>
+            <img src="../assets/logos/Badges/liberty_walk_-_earned_-_th_480.png">
+            <img src="../assets/logos/Badges/liberty_walk_-_unearned_-_ae_480.png">
+            <img src="../assets/logos/liberty_bellman_header_logo_720.png">
         </li>
     </ul>
   </div>
@@ -160,7 +163,7 @@ export default {
 };
 
 </script>
-<!-- 
+
 <style scoped>
 
 .tab {
@@ -191,6 +194,11 @@ export default {
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+}
+
+img {
+    height: 20%;
+    width: 20%;
 }
 
 </style>

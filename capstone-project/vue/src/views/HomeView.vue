@@ -6,7 +6,7 @@
     <!--<input type="number" name="iLat" id="">-->
 
 
-
+    <img src="../assets/logos/home_page_banner_-_darker_720.png">
 
   </div>
 </template>
