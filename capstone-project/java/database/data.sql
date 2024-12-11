@@ -9,6 +9,7 @@ INSERT INTO type (type_id, name) VALUES (2, 'museum');
 INSERT INTO type (type_id, name) VALUES (3, 'stadium');
 INSERT INTO type (type_id, name) VALUES (4, 'park');
 INSERT INTO type (type_id, name) VALUES (5, 'restaurant');
+INSERT INTO type(type_id, name) VALUES (6,'Completionist');
 
 
 
@@ -51,12 +52,12 @@ VALUES
 ('Little Nonna''s', 'A cozy Italian eatery known for its classic dishes and charming outdoor seating.','5-10PM Daily', '1234 Locust St, Philadelphia, PA 19107', 'LittleNonnaWalkCity.jpg', 'instagram.com/littlenonnas', 5, 39.9477967, -75.1618964),
 ('Parc', 'Traditional bistro fare is served in a bustling setting that reminds of belle epoque Paris.', 'Monday-Friday 8AM-10PM, Saturday 9:30AM-11PM, Sunday 9:30AM-10PM', '227 S 18th St, Philadelphia, PA 19103', 'ParcPhilly.jpg', 'instagram.com/parcrittenhouse', 5, 39.9491, -75.1707);
 
-INSERT INTO badge (name, description, locked_image, unlocked_image, unlocked) VALUES
-('Defender of The Land', 'For those who have visited every location!', 'liberty_walk_-_unearned_-_dol_480.png', 'liberty_walk_-_earned_-_dol_480.png', false),
-('Bar Hopper', 'For those who have visited every bar!', 'liberty_walk_-_unearned_-_bh_480.png','liberty_walk_-_earned_-_bh_480.png', false),
-('Sports Enthusiast', 'For those who have visited every stadium!','liberty_walk_-_unearned_-_se_480.png' ,'liberty_walk_-_earned_-_se_480.png', false),
-('Tree Hugger', 'For those who have visited every park!', 'liberty_walk_-_unearned_-_th_480.png','liberty_walk_-_earned_-_th_480.png', false),
-('Art Enthusiast', 'For those who have visited every museum!','liberty_walk_-_unearned_-_ae_480.png','liberty_walk_-_earned_-_ae_480.png', false),
-('Culinary Conqueror', 'For those who have visited every restaurant!','liberty_walk_unearned_480.png', 'liberty_walk_earned_480.png', false);
+INSERT INTO badge (name, description, locked_image, unlocked_image, type_id, unlocked) VALUES
+('Defender of The Land', 'For those who have visited every location!', 'liberty_walk_-_unearned_-_dol_480.png', 'liberty_walk_-_earned_-_dol_480.png', 6, false),
+('Bar Hopper', 'For those who have visited every bar!', 'liberty_walk_-_unearned_-_bh_480.png','liberty_walk_-_earned_-_bh_480.png', 1, false),
+('Sports Enthusiast', 'For those who have visited every stadium!','liberty_walk_-_unearned_-_se_480.png' ,'liberty_walk_-_earned_-_se_480.png', 3, false),
+('Tree Hugger', 'For those who have visited every park!', 'liberty_walk_-_unearned_-_th_480.png','liberty_walk_-_earned_-_th_480.png', 4, false),
+('Art Enthusiast', 'For those who have visited every museum!','liberty_walk_-_unearned_-_ae_480.png','liberty_walk_-_earned_-_ae_480.png', 2, false),
+('Culinary Conqueror', 'For those who have visited every restaurant!','liberty_walk_unearned_480.png', 'liberty_walk_earned_480.png', 5, false);
 
 COMMIT TRANSACTION;

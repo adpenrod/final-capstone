@@ -98,6 +98,8 @@
 
 <script>
 import BadgeService from '../services/BadgeService.js';
+import UserBadgeService from '../services/UserBadgeService';
+
 
 export default {
 
@@ -106,6 +108,7 @@ export default {
     data() {
         return {
             badges: [],
+            userId: this.$store.state.user.id
             /*categorizedBadges: {},
             categoryMapping: {
                 1: 'Completionist',
@@ -138,6 +141,7 @@ export default {
         fetchBadges() {
 
             BadgeService.getBadges().then((response) => {
+                
 
                    /*const badges = response.map((badge) => ({
                     id: badge.badge_id,
@@ -149,6 +153,9 @@ export default {
                    }));*/
 
                    this.badges = response.data;
+                   this.badges = badges;
+
+                   this.checkUnlockConditions();
 
             }).catch(error => {
                 console.error('Error fetching badges:', error);
@@ -156,13 +163,23 @@ export default {
 
         },
 
-        /*checkUnlockConditions(){
+        checkUnlockConditions(){
             this.badges.forEach((badge) => {
-                if(/*change this to the condition to unlock/ badge.name === /*condition) {
+              this.checkVisitCountForUnlock(badge);
+            });
+        },
+
+        checkVisitCountForUnlock(badge) {
+            UserBadgeService.hasVisitedFiveTimes(this.userId, badge.id)
+            .then((response) => {
+                if (response.data.visits >= 5){
                     badge.unlocked = true;
                 }
+            })
+            .catch((error) => {
+                console.error(`Error checking visists for badge $(badge.id):`, error);
             });
-        }*/
+        }
 
     }
 

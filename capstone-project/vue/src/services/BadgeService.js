@@ -18,6 +18,10 @@ export default {
     return http.get(`/badges/${id}`);
   },
 
+  getBadgeByTypeId(typeId) {
+    return http.get(`/badge/type/${typeId}`)
+  },
+
   update(badge) {
     return http.put(`/badges/${badge.id}`, badge);
   },

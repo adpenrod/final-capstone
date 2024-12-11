@@ -21,6 +21,9 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import AttractionsService from "../services/AttractionsService.js";
 import CheckinService from "../services/CheckinService";
+import UserBadgeService from "../services/UserBadgeService.js"
+import TypeService from "../services/TypeService.js"
+import BadgeService from "../services/BadgeService";
 
 
 export default {
@@ -158,7 +161,17 @@ export default {
                     attractionId: this.destinationAttraction.id
                 };
 
+                const request = {
+                    userId: userId,
+                    attractionType: TypeService.getTypeById(this.destinationAttraction.typeId),
+                    badgeName: BadgeService.getBadgeByTypeId(this.destinationAttraction.typeId)
+
+                };
+
                 CheckinService.createCheckin(checkin).then(() => {
+
+                    UserBadgeService.awardBadge(request);
+
                     alert(`You checked into ${this.destinationAttraction.name}.`);
                 }).catch((error) => {
                     console.error("Error during check-in:", error);

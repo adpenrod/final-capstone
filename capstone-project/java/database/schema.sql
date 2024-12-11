@@ -52,8 +52,10 @@ CREATE TABLE badge (
     description CHARACTER VARYING(255) NOT NULL,
     locked_image CHARACTER VARYING(255),
     unlocked_image CHARACTER VARYING(255),
+    type_id INTEGER,
     unlocked BOOLEAN,
-    criteria CHARACTER VARYING(255)
+    criteria CHARACTER VARYING(255),
+    CONSTRAINT FK_type FOREIGN KEY (type_id) REFERENCES type(type_id)
 );
 
 

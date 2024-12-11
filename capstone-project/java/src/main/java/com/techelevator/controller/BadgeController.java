@@ -53,6 +53,16 @@ public class BadgeController {
             return badgeDao.getBadgeByName(name);
         }
     }
+
+    @RequestMapping(path = "type/{typeId}", method = RequestMethod.GET)
+    public Badge getBadgeByTypeId(@PathVariable int typeId) {
+        Badge badge = badgeDao.getBadgeByTypeId(typeId);
+        if (badge == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Badge not found.");
+        } else {
+            return badge;
+        }
+    }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public Badge update(@Valid @RequestBody Badge badge, @PathVariable int id) {

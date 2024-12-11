@@ -7,7 +7,16 @@ public class Badge {
     private String lockedImage;
     private String unlockedImage;
     private Boolean unlocked;
+    private int typeId;
     private String criteria;
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
 
     public String getLockedImage() {
         return lockedImage;
@@ -65,13 +74,14 @@ public class Badge {
         this.criteria = criteria;
     }
 
-    public Badge(int id, String name, String description, String lockedImage, String unlockedImage, Boolean unlocked, String criteria) {
+    public Badge(int id, String name, String description, String lockedImage, String unlockedImage, Boolean unlocked, int typeId, String criteria) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.lockedImage = lockedImage;
         this.unlockedImage = unlockedImage;
         this.unlocked = unlocked;
+        this.typeId = typeId;
         this.criteria = criteria;
     }
 
