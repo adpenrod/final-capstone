@@ -1,26 +1,27 @@
 <template>
    
-
+<div>
   <div class="badge-container" v-for="badge in badges" :key="badge.id">
 
     <img
     v-if="!badge.unlocked"
-    :src="badge.lockedImage"
+    :src="getImagePath(badge.lockedImage)"
     :alt="`Locked badge: ${badge.name}`"
     class="badge-image"
     >
 
     <img
     v-else
-    :src="badge.unlockedImage"
+    :src="getImagePath(badge.unlockedImage)"
     :alt="`Unlocked badge: ${badge.name}`"
     class="badge-image"
     >
 
     <p>{{ badge.name }}</p>
+    <p>{{ badge.description }}</p>
 </div>
 
-    <div id="All" class="tabcontent">
+    <!--<div id="All" class="tabcontent">
         <h3>Completionist</h3>
         <ul>
             <li v-for="badge in completionist" :key="badge.id">
@@ -91,14 +92,12 @@
                 <p>{{ badge.description }}</p>
             </li>
         </ul>
+    </div>-->
     </div>
 </template>
 
 <script>
-import axios from 'axios';
 import BadgeService from '../services/BadgeService.js';
-
-const unlocked = true;
 
 export default {
 
@@ -106,62 +105,8 @@ export default {
 
     data() {
         return {
-            badges: [
-                {
-                Id:1,
-                name:"Defender of The Land",
-                description: "For those who have visited every location!",
-                unlocked: false,
-                lockedImage: "../assets/logos/Badges/liberty_walk_-_unearned_-_dol_480.png",
-                unlockedImage: "../assets/logos/Badges/liberty_walk_-_earned_-_dol_480.png",
-                },
-                {
-                    id:2,
-                    name:"Bar Hopper",
-                    description: "For those who have visited every bar!",
-                    unlocked: false,
-                    lockedImage:"../assets/logos/Badges/liberty_walk_-_unearned_-_bh_480.png",
-                    unlockedImage: "../assets/logos/Badges/liberty_walk_-_earned_-_bh_480.png"
-                },
-                {
-                    id:3,
-                    name:"Sports Enthusiast",
-                    description: "For those who have visited every stadium!",
-                    unlocked: false,
-                    lockedImage: "../assets/logos/Badges/liberty_walk_-_unearned_-_se_480.png",
-                    unlockedImage: "../assets/logos/Badges/liberty_walk_-_earned_-_se_480.png"
-                },
-                {
-                    id:4,
-                    name:"Tree Hugger",
-                    description: "For those who have visited every park!",
-                    unlocked: false,
-                    lockedImage: "../assets/logos/Badges/liberty_walk_-_unearned_-_th_480.png",
-                    unlockedImage: "../assets/logos/Badges/liberty_walk_-_earned_-_th_480.png"
-                },
-                {
-                    id:5,
-                    name: "Art Enthusiast",
-                    description: "For those who have visited every museum!",
-                    unlocked: false,
-                    lockedImage: "../assets/logos/Badges/liberty_walk_-_unearned_-_ae_480.png",
-                    unlockedImage: "../assets/logos/Badges/liberty_walk_-_earned_-_ae_480.png"
-                },
-                {
-                    id:6,
-                    name:"Culinary Conqueror",
-                    description: "For those who have visited every restaurant",
-                    unlocked: false,
-                    lockedImage: "../assets/logos/Badges/liberty_walk_unearned_480.png",
-                    unlockedImage: "../assets/logos/Badges/liberty_walk_earned_480.png"
-                }
-            ],
-            museums: [],
-            restaurants: [],
-            bars: [],
-            parks: [],
-            stadiums: [],
-            completionist: [],
+            badges: [],
+            /*categorizedBadges: {},
             categoryMapping: {
                 1: 'Completionist',
                 2: 'Bars',
@@ -169,30 +114,15 @@ export default {
                 4: 'Parks',
                 5: 'Museums',
                 6: 'Restaurants'
-            }
+            }*/
         };
     },
 
     computed: {
 
-        museumBadges() {
-            return this.badges.find(badge => badge.id === 5);
-        },
-
     },
 
     mounted() {
-        this.checkUnlockConditions();
-
-        const museumsTab = document.getElementById('Museums');
-        const firstTabLink = document.querySelector('.tablinks');
-
-        if (museumsTab) {
-            museumsTab.style.display = 'block';
-        }
-        if (firstTabLink) {
-            firstTabLink.className += ' active';
-        }
 
         this.fetchBadges();
 
@@ -200,35 +130,39 @@ export default {
 
     methods: {
 
+        getImagePath(image){
+            return new URL(`/src/assets/logos/Badges/${image}`, import.meta.url).href;
+        },
+
 
         fetchBadges() {
 
-            BadgeService.getBadges().then(response => {
+            BadgeService.getBadges().then((response) => {
 
-                   const badges = response.data;
+                   /*const badges = response.map((badge) => ({
+                    id: badge.badge_id,
+                    name: badge.name,
+                    description: badge.description,
+                    unlocked: badge.unlocked,
+                    lockedImage: `../assets/logos/Badges/${badge.locked_image}`,
+                    unlockedImage: `../assets/logos/Badges/${badge.unlocked_image}`
+                   }));*/
 
-                   this.badges = badges;
-
-                 this.museums = badges.filter(badge => this.categoryMapping[badge.id] === 'Museums');
-                  this.restaurants = badges.filter(badge => this.categoryMapping[badge.id] === 'Restaurants');
-                  this.bars = badges.filter(badge => this.categoryMapping[badge.id] === 'Bars');
-                  this.parks = badges.filter(badge => this.categoryMapping[badge.id] === 'Parks');
-                  this.stadiums = badges.filter(badge => this.categoryMapping[badge.id] === 'Stadiums');
-                  this.completionist = badges.filter(badge => this.categoryMapping[badge.id] === 'Completionist');
-
+                   this.badges = response.data;
 
             }).catch(error => {
                 console.error('Error fetching badges:', error);
             });
 
         },
-        checkUnlockConditions(){
+
+        /*checkUnlockConditions(){
             this.badges.forEach((badge) => {
-                if(unlocked /*change this to the condition to unlock */) {
+                if(/*change this to the condition to unlock/ badge.name === /*condition) {
                     badge.unlocked = true;
                 }
             });
-        }
+        }*/
 
     }
 
@@ -237,7 +171,7 @@ export default {
 </script>
 
 <style scoped>
-.tab {
+.badge-container {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
@@ -261,7 +195,7 @@ export default {
     background-color: #ccc;
 }
 
-.tabcontent {
+.badge-container {
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;

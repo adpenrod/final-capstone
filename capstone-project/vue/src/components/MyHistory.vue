@@ -82,8 +82,17 @@
   };
   
   </script>
-  <!-- 
+  
   <style scoped>
+
+.checkins-list {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
   
   .tab {
       overflow: hidden;
@@ -116,4 +125,4 @@
   }
   
   </style>
-  -->
+  
