@@ -14,7 +14,7 @@
   </div>
 
   <div class="accordion-container">
-    <div v-for="(marker, index) in filteredMarkers" :key="index" class="accordion" :id="'accordion-' + index">
+    <div v-for="marker in filteredMarkers" :key="marker.id" class="accordion" :id="'accordion-' + marker.id">
       <summary v-on:click="navigateToDirections(marker)">{{ marker.name }}</summary>
       <div class="accordion-content">
         <img :src="marker.image" alt="Image of attraction"/>
