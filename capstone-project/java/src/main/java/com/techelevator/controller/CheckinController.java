@@ -74,6 +74,8 @@ public class CheckinController {
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Checkin createCheckin(@Valid @RequestBody Checkin newCheckin) {
         return checkinDao.createCheckin(newCheckin);
+
+        //TODO: Don't we need to call award badges to see if this checkin results in a bdage?
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
