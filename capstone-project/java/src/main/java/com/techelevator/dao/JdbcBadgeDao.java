@@ -23,7 +23,7 @@ public class JdbcBadgeDao implements BadgeDao {
 @Override
     public Badge getBadgeById(int id){
         Badge badge = null;
-        String sql = "SELECT badge_id, name, description" +
+        String sql = "SELECT badge_id, name, description, locked_image, unlocked_image, unlocked" +
                 " FROM badge WHERE badge_id = ?";
 
         try {
@@ -39,7 +39,7 @@ public class JdbcBadgeDao implements BadgeDao {
     @Override
     public List<Badge> getBadge() {
         List<Badge> badge = new ArrayList<>();
-        String sql = "SELECT badge_id, name, description" +
+        String sql = "SELECT badge_id, name, description, locked_image, unlocked_image, unlocked" +
                 " FROM badge ORDER BY name ASC";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -57,7 +57,7 @@ public class JdbcBadgeDao implements BadgeDao {
         if (name == null) throw new IllegalArgumentException("name cannot be null");
         Badge badge = null;
 
-        String sql = "SELECT badge_id, name, description" +
+        String sql = "SELECT badge_id, name, description, locked_image, unlocked_image, unlocked" +
                 " FROM badge WHERE name = ?";
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, name);
@@ -127,6 +127,9 @@ public class JdbcBadgeDao implements BadgeDao {
         badge.setId(rs.getInt("badge_id"));
         badge.setName(rs.getString("name"));
         badge.setDescription(rs.getString("description"));
+        badge.setLockedImage(rs.getString("locked_image"));
+        badge.setUnlockedImage(rs.getString("unlocked_image"));
+        badge.setUnlocked(rs.getBoolean("unlocked"));
         return badge;
     }
 

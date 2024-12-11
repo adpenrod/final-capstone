@@ -4,15 +4,33 @@ public class Badge {
     private int id;
     private String name;
     private String description;
-    private String image;
+    private String lockedImage;
+    private String unlockedImage;
+    private Boolean unlocked;
     private String criteria;
 
-    public String getImage() {
-        return image;
+    public String getLockedImage() {
+        return lockedImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setLockedImage(String lockedImage) {
+        this.lockedImage = lockedImage;
+    }
+
+    public String getUnlockedImage() {
+        return unlockedImage;
+    }
+
+    public void setUnlockedImage(String unlockedImage) {
+        this.unlockedImage = unlockedImage;
+    }
+
+    public Boolean getUnlocked() {
+        return unlocked;
+    }
+
+    public void setUnlocked(Boolean unlocked) {
+        this.unlocked = unlocked;
     }
 
     public int getId() {
@@ -47,13 +65,16 @@ public class Badge {
         this.criteria = criteria;
     }
 
-    public Badge(int id, String name, String description, String image, String criteria) {
+    public Badge(int id, String name, String description, String lockedImage, String unlockedImage, Boolean unlocked, String criteria) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.image = image;
+        this.lockedImage = lockedImage;
+        this.unlockedImage = unlockedImage;
+        this.unlocked = unlocked;
         this.criteria = criteria;
     }
+
     public Badge(){
 
     }

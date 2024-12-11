@@ -50,7 +50,9 @@ CREATE TABLE badge (
     badge_id SERIAL PRIMARY KEY,
     name CHARACTER VARYING(100) NOT NULL UNIQUE,
     description CHARACTER VARYING(255) NOT NULL,
-    image CHARACTER VARYING(255),
+    locked_image CHARACTER VARYING(255),
+    unlocked_image CHARACTER VARYING(255),
+    unlocked BOOLEAN,
     criteria CHARACTER VARYING(255)
 );
 
