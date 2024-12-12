@@ -1,6 +1,6 @@
 <template>
     <div class="map-container">
-        <h2>Directions</h2>
+        
 
 <!---<select v-model="selectedAttraction" v-on:change="displayDirections">
             <option v-for="attraction in attractions" :key="attraction.type_id" :value="attraction">

@@ -1,5 +1,9 @@
 <template>
 
+<div class="link-container">
+        <router-link class="general-link" v-bind:to="{ name: 'badge'}">Check to see your Badge progress!</router-link>
+    </div>
+
     <div class="checkin-history-container">
       <div class="card">
         <div class="card-content">
@@ -14,9 +18,7 @@
       </div>
     </div>
 
-    <div class="link-container">
-        <router-link class="progress-link" v-bind:to="{ name: 'badge'}">Check to see your Badge progress!</router-link>
-    </div>
+    
 
   </template>
 

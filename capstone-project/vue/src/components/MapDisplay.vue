@@ -1,20 +1,26 @@
 <template>
   <body>
+   
+ 
   <div class="dropdown">
     <select v-on:change="onCategoryChange($event)">
-      <option value="all">All</option>
+      <option value="all">All Venues</option>
       <option v-for="type in types" :key="type.type_id" :value="type.type_id">
         {{ type.name }}
-        
+
+
       </option>
     </select>
   </div>
+
 
   <div class="map-container">
     <div id="map" ref="map"></div>
   </div>
 
-  <div class="card-container">
+
+ 
+    <div class="card-container">
       <div class="card" v-for="(marker, index) in filteredMarkers" :key="index" :id="'card-' + index">
         <div class="card-content">
         <img :src="marker.image" alt="Image of attraction"/>
@@ -23,10 +29,11 @@
         <p>Hours: {{ marker.hoursOfOperation }}</p>
         <p>Address: {{ marker.address }}</p>
         <p>Social Media: {{ marker.socialMedia }}</p>
-        <button class="details" v-on:click="navigateToDirections(marker)">Get Directions</button>
+        <button class="details" v-on:click="navigateToDirections(marker)">Get Directions</button>  
     </div>
     </div>
     </div>
+ 
   </body>
 </template>
 
@@ -180,7 +187,14 @@ export default {
   },
 };
 </script>
+
 <style scoped>
+
+
+
+
+
+
 /*.map-container {
   display: grid;
   grid-template-columns: 5fr;
@@ -192,9 +206,13 @@ export default {
   gap: 10px;
   overflow: hidden;
 }*/
+
+
+
+
 .card-container{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-template-areas:
     "map map map map map"
     "card card card card card";
@@ -204,7 +222,10 @@ export default {
   box-sizing: border-box;
   grid-auto-rows: 1fr;
   align-items: stretch;
+  overflow: hidden;
 }
+
+
 .card-content{
   background-color: var(--neutral-color);
   border: 1px solid #F7CD75;
@@ -217,12 +238,18 @@ export default {
   align-items: center;
   transition: box-shadow 0.3s ease;
 }
+
+
 .card-container img {
   width: 100%;
   height: 210px;
   object-fit: cover;
   border-radius: 4px;
+
+
 }
+
+
 .card-container h3 {
   color: var(--text-color);
   margin: 12px 0;
@@ -231,20 +258,52 @@ export default {
   color: var(--text-color);
   text-align: center;
 }
+
+
 details[open] summary {
-  border-bottom: 2px solid #6E3F13;
+  border-bottom: 2px solid #6e3f13;
 }
+
+
 .card-content:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
+
+
 .dropdown {
   grid-area: sidebar;
   padding: 10px;
 }
+
+
 .map {
   grid-area: map;
   height: 50vh;
   width: 100%;
   position: relative;
 }
+
+
+.dropdown select {
+  font-size: 1.2rem;
+  padding: 10px;
+  border: 1px solid #F7CD75;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  color: #6E3F13;
+  width: 35%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Georgia', serif;
+}
+
+
+.dropdown select:hover {
+  background-color: #F7CD75;
+  border-color: #EB473D;
+  color: #6E3F13;
+}
+
+
+
+
 </style>

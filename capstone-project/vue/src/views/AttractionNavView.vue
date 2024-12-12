@@ -1,10 +1,10 @@
 <template>
-    <h1>Map Directions</h1>
-    <div id="return-nav">
-        <router-link v-bind:to="{ name: 'maphome' }">Return to Map</router-link>
+    <h1>Directions To Location</h1>
+    <div class="return-nav">
+        <router-link class="general-link" v-bind:to="{ name: 'maphome' }">Return to Attraction Map</router-link>
+
 
     </div>
-
     <attraction-nav></attraction-nav>
 </template>
 
@@ -14,12 +14,14 @@ import AttractionNav from '../components/AttractionNav.vue';
 export default {
   components: { AttractionNav },
 
-    compoents: {
-        AttractionNav
-    }
+  
 }
 </script>
 
 <style scoped>
+
+.return-nav{
+    text-align: center;
+}
 
 </style>
