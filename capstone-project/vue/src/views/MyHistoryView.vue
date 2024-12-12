@@ -1,6 +1,6 @@
 <template>
     <div class="myhistory">
-      <h1>My History</h1>
+      <h1>Check-In History</h1>
     </div>
     <MyHistory/>
   </template>
