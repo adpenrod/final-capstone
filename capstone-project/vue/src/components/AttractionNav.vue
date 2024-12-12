@@ -1,6 +1,6 @@
 <template>
     <div class="map-container">
-        <h2>Directions to Location</h2>
+        <h2>Directions</h2>
 
 <!---<select v-model="selectedAttraction" v-on:change="displayDirections">
             <option v-for="attraction in attractions" :key="attraction.type_id" :value="attraction">
@@ -38,6 +38,7 @@ export default {
             map: null,
             directionsRenderer: null,
             currentAttractionMarker: null,
+            confirmCheckIn: false,
         };
     },
 
@@ -49,6 +50,10 @@ export default {
 
         }
 
+    },
+
+    created() {
+        //this.fetchAttractions();
     },
 
     mounted() {
@@ -170,8 +175,8 @@ export default {
 
                 CheckinService.createCheckin(checkin).then(() => {
 
-                    UserBadgeService.awardBadge(request);
-
+                    //UserBadgeService.awardBadge(request);
+                    this.confirmCheckIn = true;
                     alert(`You checked into ${this.destinationAttraction.name}.`);
                 }).catch((error) => {
                     console.error("Error during check-in:", error);
@@ -214,6 +219,14 @@ button {
     width: 20%;
     margin: 10px;
     padding: 10px;
+}
+
+#check-in-banner {
+    background-color: green;
+}
+
+#check-in-message {
+    color: antiquewhite;
 }
 </style>
 

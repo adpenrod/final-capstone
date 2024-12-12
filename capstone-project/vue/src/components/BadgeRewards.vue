@@ -30,15 +30,17 @@
       data() {
           return {
               badges: [],
-              userId: this.$store.state.user.id
+              //userId: this.$store.state.user.id
           };
       },
 
       computed: {
-
+        userId() {
+            return this.$store.state.user.id;
+        }
       },
 
-      mounted() {
+      created() {
           this.fetchBadges();
       },
 
@@ -59,14 +61,15 @@
           },
 
           checkUnlockConditions(){
-
+            /* 
               this.badges.forEach((badge) => {
                   if (badge.name === 'Completionist'){
                       this.checkAllLocationsVisited();
                   }else {
                       this.checkVisitCountForUnlock(badge);
                   }
-              });
+              }); 
+              */
           },
 
           checkVisitCountForUnlock(badge) {

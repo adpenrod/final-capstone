@@ -37,12 +37,24 @@ public class JdbcBadgeDao implements BadgeDao {
         return badge;
     }
     @Override
-    public List<Badge> getBadge() {
+    public List<Badge> getUserBadges(int id) {
         List<Badge> badge = new ArrayList<>();
+        //TODO: DONE - SQL Incorrectly retrieving all badges instead of User Badges
+        /*
         String sql = "SELECT badge_id, name, description, locked_image, unlocked_image, type_id, unlocked" +
-                " FROM badge ORDER BY name ASC";
+                        " FROM badge ORDER BY name ASC";
+        */
+        //TODO: REFACTOR BASE QUERY INTO VIEW !!WATCH THE USER_ID PARAM PLACEMENT, MOVE TO WHERE CLAUSE
+        String sql = "SELECT b.badge_id, name, description, locked_image, unlocked_image, type_id, (ub.badge_id IS NOT NULL) as unlocked \n" +
+                "FROM badge b\n" +
+                "\tLEFT OUTER JOIN user_badge ub \n" +
+                "\t\tON ub.badge_id = b.badge_id\n" +
+                "\t\t\tAND\n" +
+                "\t\t\tub.user_id = ?\n" +
+                "ORDER BY name ASC;";
+
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             while (results.next()) {
                 Badge badges = mapRowToBadge(results);
                 badge.add(badges);

@@ -2,6 +2,8 @@
     <div class="map-container">
         <h2>Directions to Location</h2>
 
+
+
         <select v-model="selectedAttraction" v-on:change="displayDirections">
             <option v-for="attraction in attractions" :key="attraction.type_id" :value="attraction">
                 {{ attraction.name }}
@@ -35,6 +37,7 @@ export default {
             map: null,
             directionsRenderer: null,
             currentAttractionMarker: null,
+            
         };
     },
 
@@ -154,6 +157,7 @@ export default {
 
                 CheckinService.createCheckin(checkin).then(() => {
                     this.selectedAttraction.checkedOff = true;
+
                     alert(`You checked into ${this.selectedAttraction.name}.`);
                 }).catch((error) => {
                     console.error("Error during check-in:", error);

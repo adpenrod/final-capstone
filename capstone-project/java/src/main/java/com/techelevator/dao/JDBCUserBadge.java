@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 public class JDBCUserBadge implements UserBadgeDao{
     private final JdbcTemplate jdbcTemplate;
 
+    private final int FIVE_VISITS = 5;
+    private final int MAX_VISITS = 25;
+
     public JDBCUserBadge(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -22,15 +25,19 @@ public class JDBCUserBadge implements UserBadgeDao{
         String sql = "SELECT COUNT(c.checkin_id) FROM checkin c JOIN attraction a " +
                 "ON c.attraction_id = a.attraction_id JOIN type t ON a.type_id = t.type_id" +
                 " WHERE c.user_id = ? AND t.name = ? ";
+
+        int userAttractionTypeVisits = 0;
+
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId, attractionType);
             if (rowSet.next()) {
-                return rowSet.getInt(1) == 5;
+                userAttractionTypeVisits = rowSet.getInt(1);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
+        }finally {
+            return userAttractionTypeVisits == FIVE_VISITS;
         }
-        return false;
     }
 
     @Override
@@ -38,15 +45,20 @@ public class JDBCUserBadge implements UserBadgeDao{
         String sql = "SELECT COUNT(c.checkin_id) FROM checkin c JOIN attraction a " +
                 "ON c.attraction_id = a.attraction_id JOIN type t ON a.type_id = t.type_id" +
                 " WHERE c.user_id = ?";
+        int userAttractionTypeVisits = 0;
+
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
             if (rowSet.next()) {
-                return rowSet.getInt(1) == 25;
+                userAttractionTypeVisits = rowSet.getInt(1);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-        return false;
+        finally {
+            return userAttractionTypeVisits == MAX_VISITS;
+        }
+
     }
 
     @Override

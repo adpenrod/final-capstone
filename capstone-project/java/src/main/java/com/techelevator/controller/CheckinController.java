@@ -87,7 +87,7 @@ public class CheckinController {
 
         try{
 
-            userBadgeDao.checkAndAwardBadge(checkinDao.getUserIdByCheckin(checkin.getUserId()), typeDao.getTypeByAttractionId(checkin.getAttractionId()), badgeDao.getBadgeNameByCheckIn(checkin.getAttractionId()));
+            userBadgeDao.checkAndAwardBadge(newCheckin.getUserId(), typeDao.getTypeByAttractionId(checkin.getAttractionId()), badgeDao.getBadgeNameByCheckIn(checkin.getAttractionId()));
             return checkin;
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Checkin failed.");

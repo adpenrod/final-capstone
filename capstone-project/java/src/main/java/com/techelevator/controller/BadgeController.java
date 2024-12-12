@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.Service.AttractionService;
 import com.techelevator.dao.BadgeDao;
 import com.techelevator.dao.UserBadgeDao;
+import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Badge;
 import jakarta.validation.Valid;
@@ -21,17 +22,20 @@ public class BadgeController {
     private BadgeDao badgeDao;
 
     private UserBadgeDao userBadgeDao;
+    private UserDao userDao;
     private AttractionService as;
 
-    public BadgeController(BadgeDao badgeDao, AttractionService as) {
+    public BadgeController(BadgeDao badgeDao, AttractionService as, UserDao userDao) {
         this.badgeDao = badgeDao;
+        this.userDao = userDao;
         this.as = as;
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Badge> listBadges() {
+    @PreAuthorize("isAuthenticated()")
+    public List<Badge> listBadges( Principal principal) {
 
-        return badgeDao.getBadge();
+        return badgeDao.getUserBadges( userDao.getUserByUsername(principal.getName()).getId() );
     }
 
     @RequestMapping(path = "{id}", method = RequestMethod.GET)

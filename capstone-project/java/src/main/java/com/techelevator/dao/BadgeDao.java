@@ -6,7 +6,7 @@ import com.techelevator.model.Badge;
 import java.util.List;
 
 public interface BadgeDao {
-    public List<Badge> getBadge();
+    public List<Badge> getUserBadges(int id);
     public Badge getBadgeById(int id);
     public Badge getBadgeByName(String name);
     public Badge getBadgeByTypeId(int typeId);
