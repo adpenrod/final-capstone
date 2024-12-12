@@ -6,7 +6,8 @@
       <router-link v-bind:to="{ name: 'login' }" v-else>Login</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'maphome' }">Map</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'badge' }">Rewards</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'myhistory' }">My History</router-link>
+      <router-link v-bind:to="{ name: 'myhistory' }">My History</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'about' }">About</router-link>
     </div>
     <router-view />
   </div>

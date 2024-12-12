@@ -13,6 +13,7 @@ import MapDirectionsView from '../views/MapDirectionsView.vue';
 import MapHomeView from '../views/MapHomeView.vue';
 import MyHistoryView from '../views/MyHistoryView.vue';
 import AttractionNavView from '../views/AttractionNavView.vue';
+import AboutView from '../views/AboutView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -104,6 +105,16 @@ const routes = [
     }
   },
   {
+    path: "/about",
+    name: "about",
+    component: AboutView,
+    meta:{
+      requiresAuth: false
+    }
+
+  },
+
+  {
     path: "/nav/:aId",
     name: "attnav",
     component: AttractionNavView,
@@ -111,7 +122,8 @@ const routes = [
       requiresAuth: false
     }
 
-  }
+  },
+
 ];
 
 // Create the router
