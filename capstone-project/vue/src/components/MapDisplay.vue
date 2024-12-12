@@ -210,7 +210,7 @@ export default {
 
 
 
-.card-container{
+ .card-container{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-template-areas:
@@ -223,7 +223,15 @@ export default {
   grid-auto-rows: 1fr;
   align-items: stretch;
   overflow: hidden;
+} 
+
+
+
+.card {
+  display: inline-block;
+  widows: 150px;
 }
+
 
 
 .card-content{

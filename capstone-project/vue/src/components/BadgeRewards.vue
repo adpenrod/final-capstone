@@ -1,5 +1,6 @@
 <template>
-
+  <div id="component-div">
+    
     <div class="badge-card-container">
       <div class="card" v-for="badge in badges" :key="badge.id">
         <div class="card-content">
@@ -13,6 +14,8 @@
         </div>
       </div>
     </div>
+    <button id="chkButton" type="button" @click="fetchBadges">Check Status</button>
+  </div>
 
   </template>
 
@@ -141,5 +144,12 @@
   }
   .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  #component-div {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   </style>

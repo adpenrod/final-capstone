@@ -14,6 +14,7 @@ public class JDBCUserBadge implements UserBadgeDao{
 
     private final int FIVE_VISITS = 5;
     private final int MAX_VISITS = 25;
+    private final int DEFENDER_BADGE = 1;
 
     public JDBCUserBadge(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -36,27 +37,33 @@ public class JDBCUserBadge implements UserBadgeDao{
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }finally {
-            return userAttractionTypeVisits == FIVE_VISITS;
+            return userAttractionTypeVisits >= FIVE_VISITS;
         }
     }
 
     @Override
     public boolean hasVisitedEveryAttraction(int userId) {
-        String sql = "SELECT COUNT(c.checkin_id) FROM checkin c JOIN attraction a " +
-                "ON c.attraction_id = a.attraction_id JOIN type t ON a.type_id = t.type_id" +
-                " WHERE c.user_id = ?";
-        int userAttractionTypeVisits = 0;
+        String sql = "SELECT \n" +
+                "\t(\n" +
+                "\t\tSELECT COUNT(DISTINCT(attraction_id)) FROM attraction\n" +
+                "\n" +
+                "\t) - COUNT(DISTINCT(c.attraction_id))\n" +
+                "FROM \n" +
+                "\tcheckin c \n" +
+                "\t\n" +
+                "WHERE c.user_id = ?";
+        int userAttractionsRemaining = 0;
 
         try {
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
             if (rowSet.next()) {
-                userAttractionTypeVisits = rowSet.getInt(1);
+                userAttractionsRemaining = rowSet.getInt(1);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
         finally {
-            return userAttractionTypeVisits == MAX_VISITS;
+            return userAttractionsRemaining == 0;
         }
 
     }
@@ -94,16 +101,10 @@ public class JDBCUserBadge implements UserBadgeDao{
     @Override
     public void checkAndAwardBadge(int userId, String attractionType, String badgeName) {
         if(hasVisitedEveryAttraction(userId)){
-            int badgeId = getBadgeIdByName(badgeName);
-
-            if(badgeId != -1){
-                insertUserBadge(userId, badgeId);
-            } else {
-                System.out.println("Badge with name " + badgeName + " was not found.");
-            }
-
+                insertUserBadge(userId, DEFENDER_BADGE);
         }
-        else if(hasVistedAttractionTypeFiveTimes(userId, attractionType)){
+
+        if(hasVistedAttractionTypeFiveTimes(userId, attractionType)){
             int badgeId = getBadgeIdByName(badgeName);
 
             if(badgeId != -1){

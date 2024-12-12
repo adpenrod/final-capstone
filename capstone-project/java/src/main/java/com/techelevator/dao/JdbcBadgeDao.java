@@ -45,7 +45,7 @@ public class JdbcBadgeDao implements BadgeDao {
                         " FROM badge ORDER BY name ASC";
         */
         //TODO: REFACTOR BASE QUERY INTO VIEW !!WATCH THE USER_ID PARAM PLACEMENT, MOVE TO WHERE CLAUSE
-        String sql = "SELECT b.badge_id, name, description, locked_image, unlocked_image, type_id, (ub.badge_id IS NOT NULL) as unlocked \n" +
+        String sql = "SELECT DISTINCT b.badge_id, name, description, locked_image, unlocked_image, type_id, (ub.badge_id IS NOT NULL) as unlocked \n" +
                 "FROM badge b\n" +
                 "\tLEFT OUTER JOIN user_badge ub \n" +
                 "\t\tON ub.badge_id = b.badge_id\n" +

@@ -64,7 +64,7 @@ CREATE TABLE user_badge (
     user_id INTEGER NOT NULL,
     badge_id INTEGER NOT NULL,
     earned_time TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_id, badge_id),
+    PRIMARY KEY (user_id, badge_id, earned_time),
     CONSTRAINT FK_user_badge FOREIGN KEY (user_id) REFERENCES users(user_id),
     CONSTRAINT FK_badge FOREIGN KEY (badge_id) REFERENCES badge(badge_id)
 );
