@@ -63,9 +63,9 @@ public class BadgeController {
             return badge;
         }
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public Badge update(@Valid @RequestBody Badge badge, @PathVariable int id) {
+    public Badge update( @RequestBody Badge badge, @PathVariable int id) {
         badge.setId(id);
         try {
             Badge updatedBadge = badgeDao.updateBadge(badge);

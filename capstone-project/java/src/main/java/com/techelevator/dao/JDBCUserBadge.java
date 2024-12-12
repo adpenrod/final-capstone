@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Badge;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -77,8 +78,6 @@ public class JDBCUserBadge implements UserBadgeDao{
         }
 
     }
-
-
 
     @Override
     public void checkAndAwardBadge(int userId, String attractionType, String badgeName) {

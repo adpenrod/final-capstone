@@ -73,6 +73,22 @@ public class JdbcTypeDao implements TypeDao {
         return type;
     }
 
+    @Override
+    public String getTypeByAttractionId(int id) {
+        String typeName = null;
+        String sql = "SELECT t.name " +
+                " FROM type t JOIN attraction a ON a.type_id = t.type_id WHERE a.attraction_id =?";
+        try {
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
+            if (rowSet.next()) {
+                typeName = rowSet.getString("name");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return typeName;
+    }
+
 
     @Override
     public Type updateType(Type type) {

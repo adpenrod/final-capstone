@@ -14,6 +14,7 @@ public interface CheckinDao {
     List<Checkin> getCheckinsByUserId(int userId);
     List<Checkin> getCheckinsByAttractionId(int attractionId);
     List<Checkin> getCheckinsByUserName(String userName);
+    int getUserIdByCheckin(int userId);
     Checkin createCheckin(Checkin newCheckin);
     int deleteCheckinByCheckinId(int checkinId);
 

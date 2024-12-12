@@ -100,6 +100,22 @@ public class JdbcCheckinDao implements CheckinDao {
         }
         return checkins;
     }
+
+    @Override
+    public int getUserIdByCheckin(int id){
+        int userId = 0;
+        String sql = "SELECT user_id" +
+                " FROM checkin WHERE checkin_id = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+            if (results.next()) {
+                userId = results.getInt("user_id");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return userId;
+    }
     @Override
     public int deleteCheckinByCheckinId(int checkinId) {
         int numberOfRows = 0;

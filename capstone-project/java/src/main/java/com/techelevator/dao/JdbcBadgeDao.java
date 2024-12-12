@@ -87,6 +87,25 @@ public class JdbcBadgeDao implements BadgeDao {
         return badge;
 
     }
+
+    @Override
+    public String getBadgeNameByCheckIn(int Id){
+        String badgeName = null;
+        String sql = "SELECT b.name" +
+                " FROM badge b JOIN type t ON b.type_id = t.type_id JOIN attraction a ON t.type_id = a.type_id " +
+                "JOIN checkin c ON a.attraction_id = c.attraction_id WHERE c.attraction_id = ?";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, Id);
+            if (results.next()) {
+                badgeName = results.getString("name");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return badgeName;
+
+    }
     @Override
     public Badge createBadge(Badge badge) {
         Badge newBadge = null;
@@ -122,9 +141,9 @@ public class JdbcBadgeDao implements BadgeDao {
     @Override
     public Badge updateBadge(Badge badge) {
         Badge updatedBadge = null;
-        String sql = "UPDATE badge SET name=?, description=? WHERE badge_id=?";
+        String sql = "UPDATE badge SET name=?, description=?, locked_image=?, unlocked_image=?, type_id=?, unlocked=true  WHERE badge_id=?";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, badge.getName(), badge.getDescription(), badge.getId());
+            int rowsAffected = jdbcTemplate.update(sql, badge.getName(), badge.getDescription(), badge.getLockedImage(),badge.getUnlockedImage(), badge.getTypeId(), badge.getId()); //TODO:UPDATE IS BREAKING RIGHT HERE
 
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");

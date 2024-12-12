@@ -1,7 +1,10 @@
 package com.techelevator.controller;
 
 import com.techelevator.Service.AttractionService;
+import com.techelevator.dao.BadgeDao;
 import com.techelevator.dao.CheckinDao;
+import com.techelevator.dao.TypeDao;
+import com.techelevator.dao.UserBadgeDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Checkin;
 import jakarta.validation.Valid;
@@ -18,11 +21,18 @@ import java.util.List;
 public class CheckinController {
     private AttractionService as;
     private CheckinDao checkinDao;
+    private UserBadgeDao userBadgeDao;
+    private TypeDao typeDao;
+    private BadgeDao badgeDao;
 
-    public CheckinController(AttractionService as, CheckinDao checkinDao) {
-        this.checkinDao = checkinDao;
+    public CheckinController(AttractionService as, CheckinDao checkinDao, UserBadgeDao userBadgeDao, TypeDao typeDao, BadgeDao badgeDao) {
         this.as = as;
+        this.checkinDao = checkinDao;
+        this.userBadgeDao = userBadgeDao;
+        this.typeDao = typeDao;
+        this.badgeDao = badgeDao;
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(path = "all", method = RequestMethod.GET)
     public List<Checkin> allUserCheckins() {
@@ -73,7 +83,17 @@ public class CheckinController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Checkin createCheckin(@Valid @RequestBody Checkin newCheckin) {
-        return checkinDao.createCheckin(newCheckin);
+        Checkin checkin = checkinDao.createCheckin(newCheckin);
+
+        try{
+
+            userBadgeDao.checkAndAwardBadge(checkinDao.getUserIdByCheckin(checkin.getUserId()), typeDao.getTypeByAttractionId(checkin.getAttractionId()), badgeDao.getBadgeNameByCheckIn(checkin.getAttractionId()));
+            return checkin;
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Checkin failed.");
+        }
+
+
 
         //TODO: Don't we need to call award badges to see if this checkin results in a bdage?
     }
