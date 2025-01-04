@@ -1,0 +1,1 @@
+“Liberty Walk” is an application designed to drive traffic to city sites and attractions. The app uses HTML, CSS, JavaScript, and Vue for front end and Java for back end. It works with PostreSQL database and with the Google Maps API.
